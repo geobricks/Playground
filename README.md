@@ -1,0 +1,4 @@
+Playground
+==========
+
+Collection of examples

@@ -9,60 +9,20 @@ from pgeo.metadata.metadata import Metadata
 from pgeo.manager.manager import Manager
 from pgeo.utils.log import logger
 from pgeo.metadata.metadata import merge_layer_metadata
-import subprocess
+from data_processing.processing import process_layers
 
 
-log = logger("playground.trmm.trmm")
+log = logger("playground.data_processing.trmm")
 
 input_folder = "/home/vortex/Desktop/LAYERS/TRMM/"
 output_folder = "/home/vortex/Desktop/LAYERS/TRMM/monthly/"
 
 manager = Manager(settings)
 
-process_layer_parameters = {
-    "gdalwarp" : {
-        "-multi" : "",
-        "-of" : "GTiff",
-        #"-tr" : "0.00833333, -0.00833333",
-        #"-s_srs" :"'+proj=sinu +R=6371007.181 +nadgrids=@null +wktext'",
-        "-s_srs" :"EPSG:4326",
-        "-co": "'TILED=YES'",
-        "-t_srs": "EPSG:3857",
-        # "-srcnodata" : "nodata",
-        # "-dstnodata" : "nodata"
-    },
-    "gdaladdo" : {
-        "parameters" : {
-            "-r" : "average"
-        },
-        "overviews_levels" : "2 4 8 16"
-    }
-}
-
-
 
 def dt2unix(dt):
     return int(time.mktime(dt.timetuple()) + (dt.microsecond / 10.0 ** 6))
 
-
-def process_trmm(input_path, output_file, parameters):
-    cmd = "gdalwarp "
-    for key in parameters["gdalwarp"].keys():
-        cmd += " " + key + " " + str(parameters["gdalwarp"][key])
-    cmd += " " + input_path + " " + output_file
-
-    process = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
-    output, error = process.communicate()
-
-
-    cmd = "gdaladdo "
-    for key in parameters["gdaladdo"]["parameters"].keys():
-        cmd += " " + key + " " + str(parameters["gdaladdo"]["parameters"][key])
-    cmd += " " + output_file
-    cmd += " " + parameters["gdaladdo"]["overviews_levels"]
-
-    print cmd
-    process = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
 
 def calc_trmm_monthly(year, month):
     try:
@@ -72,7 +32,7 @@ def calc_trmm_monthly(year, month):
 
 
         # calculate layers
-        #calc_layers(files_path, outputfile, "sum")
+        calc_layers(files_path, output_file, "sum")
 
 
         if os.path.isfile(output_file):
@@ -130,7 +90,7 @@ def calc_trmm_monthly(year, month):
             else:
                 os.mkdir(output_folder + "/output")
             output_processed_file = output_folder + "/output/" + output_filename
-            process_trmm(output_file, output_processed_file, process_layer_parameters)
+            process_layers(output_file, output_processed_file)
 
 
             print manager.publish_coverage(output_processed_file, metadata_def)

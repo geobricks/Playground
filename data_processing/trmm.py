@@ -30,10 +30,10 @@ def dt2unix(dt):
     return int(time.mktime(dt.timetuple()) + (dt.microsecond / 10.0 ** 6))
 
 
-def calc_trmm_monthly(year, month, calc=False):
+def calc_trmm_monthly(year, month, file_prefix="trmm", calc=False):
     try:
         files_path = input_folder  + year+ "/" + month + "/*.tif"
-        output_filename = "trmm_"+ month +"_"+ year +".tif"
+        output_filename = file_prefix+ "_"+ month +"_"+ year +".tif"
         output_file = output_folder + output_filename
 
         default_workspace = manager.geoserver.get_default_workspace()
@@ -69,11 +69,11 @@ def get_range_dates_metadata(month, year):
     return dt2unix(from_date), dt2unix(to_date)
 
 
-def calc_trmm_avg_monthly(month, calc=False):
+def calc_trmm_avg_monthly(month, file_prefix="trmm", calc=False):
     try:
-        files_path = output_folder + "trmm_" + month +"*"
-        file_output = output_folder + "/avg/" + "trmm_" + month + "_avg.tif"
-        file_output_processed = output_folder + "output/" + "trmm_" + month + "_avg.tif"
+        files_path = output_folder + file_prefix + "" + month +"*"
+        file_output = output_folder + "/avg/" + file_prefix +  "_" + month + "_avg.tif"
+        file_output_processed = output_folder + "output/" + file_prefix +  "_" + month + "_avg.tif"
 
         if calc:
             calc_layers(files_path, file_output, "avg")
@@ -85,14 +85,14 @@ def calc_trmm_avg_monthly(month, calc=False):
         log.error(e)
 
 
-def calc_trmm_da_monthly(year, month, calc=False):
+def calc_trmm_da_monthly(year, month, file_prefix="trmm", calc=False):
     try:
-        file_input_month = output_folder + "trmm_" + month +"_" + year + ".tif"
-        file_input_avg = output_folder  + "avg/" + "trmm_" + month +"_avg.tif"
+        file_input_month = output_folder + file_prefix + "_" + month +"_" + year + ".tif"
+        file_input_avg = output_folder  + "avg/" + file_prefix + "_" +  month +"_avg.tif"
 
-        file_output = output_folder + "da/" + "trmm_" + month + "_" + year + "_da.tif"
+        file_output = output_folder + "da/" + file_prefix + "_" +  month + "_" + year + "_da.tif"
 
-        file_output_processed = output_folder + "output/" + "trmm_" + month + "_" + year + "_da.tif"
+        file_output_processed = output_folder + "output/" + file_prefix + "_" +  month + "_" + year + "_da.tif"
 
         files = [file_input_month, file_input_avg]
 
@@ -218,20 +218,21 @@ def publish_layers():
 years = ['2012', '2013', '2014']
 months = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
 product = '3B42RT'
+file_prefix ="trmm"
 
 # calculating sum
 for year in years:
     for month in months:
-        calc_trmm_monthly(year, month, False)
+        calc_trmm_monthly(year, month, file_prefix, False)
 
 
 for month in months:
-    calc_trmm_avg_monthly(month, False)
+    calc_trmm_avg_monthly(month,file_prefix, False)
 
 
 for year in years:
     for month in months:
-        calc_trmm_da_monthly(year, month, False)
+        calc_trmm_da_monthly(year, month, file_prefix, False)
 
 
 

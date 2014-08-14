@@ -4,12 +4,18 @@ import datetime
 import time
 import json
 import os
+import glob
 from pgeo.config.settings import settings, read_template
 from pgeo.metadata.metadata import Metadata
 from pgeo.manager.manager import Manager
 from pgeo.utils.log import logger
 from pgeo.metadata.metadata import merge_layer_metadata
 from data_processing.processing import process_layers
+from pgeo.utils.filesystem import get_filename
+
+
+# TODO: remove all metadata trmm layers on mongo
+# db.layer.remove( { uid: { $regex: 'trmm_*', $options: 'i' } } );
 
 
 log = logger("playground.data_processing.trmm")
@@ -24,65 +30,20 @@ def dt2unix(dt):
     return int(time.mktime(dt.timetuple()) + (dt.microsecond / 10.0 ** 6))
 
 
-def calc_trmm_monthly(year, month):
+def calc_trmm_monthly(year, month, calc=False):
     try:
         files_path = input_folder  + year+ "/" + month + "/*.tif"
         output_filename = "trmm_"+ month +"_"+ year +".tif"
         output_file = output_folder + output_filename
 
+        default_workspace = manager.geoserver.get_default_workspace()
 
         # calculate layers
-        calc_layers(files_path, output_file, "sum")
+        if calc:
+            calc_layers(files_path, output_file, "sum")
 
 
         if os.path.isfile(output_file):
-            # get metadata
-            from_date, to_date = get_range_dates_metadata(month, year)
-            creationDate = dt2unix(datetime.datetime.now())
-
-
-            # Sample of Metadata json
-            log.info("Creating metadata")
-            metadata_def = {}
-            metadata_def["title"] = {}
-            metadata_def["title"]["EN"] = "TRMM " + month + "-" + year
-            metadata_def["creationDate"] = creationDate
-            metadata_def["meContent"] = {}
-            metadata_def["meContent"]["seCoverage"] = {}
-            metadata_def["meContent"]["seCoverage"]["coverageTime"] = {}
-            metadata_def["meContent"]["seCoverage"]["coverageTime"]["from"] = from_date
-            metadata_def["meContent"]["seCoverage"]["coverageTime"]["to"] = to_date
-            metadata_def["meContent"]["seCoverage"]["coverageSector"] = {}
-            metadata_def["meContent"]["seCoverage"]["coverageSector"]["codeList"] = "Products"
-            metadata_def["meContent"]["seCoverage"]["coverageSector"]["codes"] = [{"code" : "TRMM"}]
-            metadata_def["meContent"]["seCoverage"]["coverageSector"]["codes"] = [{"code" : "TRMM"}]
-            metadata_def["meSpatialRepresentation"] = {}
-            metadata_def["meSpatialRepresentation"]["seDefaultStyle"] = {}
-            metadata_def["meSpatialRepresentation"]["seDefaultStyle"]["name"] = "rain"
-
-            # merging metadata to the base raster one
-            metadata_def = merge_layer_metadata("raster", metadata_def)
-
-            # "seCoverage" : {
-            #     "coverageTime" : {
-            #         "from" : 1328405808080,
-            #         "to": 1328405808080
-            #     },
-            #     "coverageGeographic" : {
-            #         "codeList" : "...",
-            #         "version" : "...",
-            #         "codes" : [{"code" : "world"}]
-            #     },
-            #     "coverageSector" : {
-            #         "codeList" : "...",
-            #         "version" : "...",
-            #         "codes" : [{"code" : "MODISQ1"}]
-            #     }
-            # }]
-
-            log.info(metadata_def)
-            #obj_id = metadata.db_metadata.insert_metadata(metadata_def)
-
 
             # covert to geotiff 3857 the file
             if os.path.isdir(output_folder + "/output"):
@@ -91,9 +52,6 @@ def calc_trmm_monthly(year, month):
                 os.mkdir(output_folder + "/output")
             output_processed_file = output_folder + "/output/" + output_filename
             process_layers(output_file, output_processed_file)
-
-
-            print manager.publish_coverage(output_processed_file, metadata_def)
         else:
             log.error("No file named %s " % output_file)
 
@@ -111,16 +69,148 @@ def get_range_dates_metadata(month, year):
     return dt2unix(from_date), dt2unix(to_date)
 
 
+def calc_trmm_avg_monthly(month, calc=False):
+    try:
+        files_path = output_folder + "trmm_" + month +"*"
+        file_output = output_folder + "/avg/" + "trmm_" + month + "_avg.tif"
+        file_output_processed = output_folder + "output/" + "trmm_" + month + "_avg.tif"
+
+        if calc:
+            calc_layers(files_path, file_output, "avg")
+            process_layers(file_output, file_output_processed)
+
+            # TODO: reproject
+
+    except Exception, e:
+        log.error(e)
 
 
-# def get_metadata():
-#     files = glob.glob(output_folder + "*.tif")
-#     for file in files:
-#         name = get_filename(file)
-#         month = name[5:7]
-#         print month
-#         year  = name[8:]
-#         print year
+def calc_trmm_da_monthly(year, month, calc=False):
+    try:
+        file_input_month = output_folder + "trmm_" + month +"_" + year + ".tif"
+        file_input_avg = output_folder  + "avg/" + "trmm_" + month +"_avg.tif"
+
+        file_output = output_folder + "da/" + "trmm_" + month + "_" + year + "_da.tif"
+
+        file_output_processed = output_folder + "output/" + "trmm_" + month + "_" + year + "_da.tif"
+
+        files = [file_input_month, file_input_avg]
+
+        if calc:
+            if os.path.isfile(file_input_month) and os.path.isfile(file_input_avg):
+                try:
+                    calc_layers(files, file_output, "ratio")
+                except Exception, e:
+                    log.error(e)
+                    pass
+
+                process_layers(file_output, file_output_processed)
+
+            # TODO: reprojection
+
+    except Exception, e:
+        log.error(e)
+
+
+def publish_layers():
+    files = glob.glob(output_folder + "output/*.tif")
+
+    for f in files:
+
+        name = get_filename(f)
+
+        print name
+
+        month = int(name[5:7])
+
+        print month
+        year = None
+        try:
+            year = int(name[8:12])
+        except Exception, e:
+            log.error("year error")
+
+        # TODO: what year for the DA?
+        if year is None:
+            year = "2014"
+
+
+        # get title name
+        title = name.replace("_", " ").capitalize()
+
+        # get metadata
+        from_date, to_date = get_range_dates_metadata(month, year)
+        creationDate = dt2unix(datetime.datetime.now())
+
+        # Sample of Metadata json
+        log.info("Creating metadata")
+        metadata_def = {}
+        metadata_def["title"] = {}
+        metadata_def["title"]["EN"] = title
+        metadata_def["creationDate"] = creationDate
+        metadata_def["meContent"] = {}
+        metadata_def["meContent"]["seCoverage"] = {}
+        metadata_def["meContent"]["seCoverage"]["coverageTime"] = {}
+        metadata_def["meContent"]["seCoverage"]["coverageTime"]["from"] = from_date
+        metadata_def["meContent"]["seCoverage"]["coverageTime"]["to"] = to_date
+        metadata_def["meContent"]["seCoverage"]["coverageSector"] = {}
+        metadata_def["meContent"]["seCoverage"]["coverageSector"]["codeList"] = "Products"
+        metadata_def["meContent"]["seCoverage"]["coverageSector"]["codes"] = [{"code" : "TRMM"}]
+        metadata_def["meContent"]["seCoverage"]["coverageSector"]["codes"] = [{"code" : "TRMM"}]
+
+
+        # TODO: in theory should be the original file the onlineResource
+        metadata_def["meAccessibility"] = {}
+        metadata_def["meAccessibility"]["seDistribution"] = {}
+        metadata_def["meAccessibility"]["seDistribution"]["onlineResource"] = f
+
+        # TODO: added new field for the original resource (should we have two different metadata?)
+        #metadata_def["meAccessibility"]["seDistribution"]["originalResource"] = output_filename
+
+        # adding type of layer
+        aggregationProcessing = "none"
+        if "_avg" in name:
+            aggregationProcessing = "avg"
+        elif "_da" in name:
+            aggregationProcessing = "da"
+        metadata_def["meStatisticalProcessing"] = {}
+        metadata_def["meStatisticalProcessing"]["seDatasource"] = {}
+        metadata_def["meStatisticalProcessing"]["seDatasource"]["seDataCompilation"] = {}
+        metadata_def["meStatisticalProcessing"]["seDatasource"]["seDataCompilation"]["aggregationProcessing"] = aggregationProcessing;
+
+        # default style
+        metadata_def["meSpatialRepresentation"] = {}
+        metadata_def["meSpatialRepresentation"]["seDefaultStyle"] = {}
+        if aggregationProcessing == "da":
+            metadata_def["meSpatialRepresentation"]["seDefaultStyle"]["name"] = "rainfall_" + aggregationProcessing
+        else:
+            metadata_def["meSpatialRepresentation"]["seDefaultStyle"]["name"] = "rainfall"
+
+
+        # merging metadata to the base raster one
+        metadata_def = merge_layer_metadata("raster", metadata_def)
+
+        # "seCoverage" : {
+        #     "coverageTime" : {
+        #         "from" : 1328405808080,
+        #         "to": 1328405808080
+        #     },
+        #     "coverageGeographic" : {
+        #         "codeList" : "...",
+        #         "version" : "...",
+        #         "codes" : [{"code" : "world"}]
+        #     },
+        #     "coverageSector" : {
+        #         "codeList" : "...",
+        #         "version" : "...",
+        #         "codes" : [{"code" : "MODISQ1"}]
+        #     }
+        # }]
+
+        log.info(metadata_def)
+
+        # publish layer
+        print manager.publish_coverage(f, metadata_def)
 
 
 
@@ -132,7 +222,18 @@ product = '3B42RT'
 # calculating sum
 for year in years:
     for month in months:
-        calc_trmm_monthly(year, month)
+        calc_trmm_monthly(year, month, False)
 
-#get_metadata()
+
+for month in months:
+    calc_trmm_avg_monthly(month, False)
+
+
+for year in years:
+    for month in months:
+        calc_trmm_da_monthly(year, month, False)
+
+
+
+publish_layers()
 

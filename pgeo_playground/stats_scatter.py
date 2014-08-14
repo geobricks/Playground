@@ -10,7 +10,7 @@ json_stats = {
         "name" : "MODISQ13",
 
         # the stored UID in the GeoMetadata database (uses Geoserver Path (?) )
-        #"uid" : "trmm:3B42RT.2014010100.7.03hr",
+        #"uid" : "fenix:banana_area1",
 
         # OR instead of the uid directly gives the path of the source layer without using the Default Path
         # "path" : "/home/vortex/Desktop/LAYERS/TRMM/OUTPUT/Rainfall_06_2014.tif",

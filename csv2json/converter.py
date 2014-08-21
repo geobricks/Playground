@@ -6,30 +6,35 @@ def convert():
     with open('MODIS_GAUL.csv', 'rb') as csvfile:
         spamreader = csv.reader(csvfile, delimiter=',', quotechar='|')
         current = '102'
-        hs = []
-        vs = []
         out = []
+
+        buffer = []
+        buffers = {}
         for row in spamreader:
-            h = row[len(row) - 2]
-            v = row[len(row) - 1]
-            c = row[0]
-            l = row[1]
-            hs.append(h)
-            vs.append(v)
-            if c in current:
-                pass
+            if row[0] == current:
+                buffer.append(row)
             else:
-                out.append({
-                    'to_v': max(vs),
-                    'gaul_label': l,
-                    'from_v': min(vs),
-                    'from_h': min(hs),
-                    'gaul_code': c,
-                    'to_h': max(hs)
-                })
-                hs = []
-                vs = []
-                current = c
+                current = row[0]
+                buffer = []
+                buffer.append(row)
+            buffers[row[1]] = buffer
+
+        for key in buffers:
+            hs = []
+            vs = []
+            for buffer in buffers[key]:
+                hs.append(int(buffer[3]))
+                vs.append(int(buffer[4]))
+            tmp = {
+                "to_v": max(vs),
+                "gaul_label": key,
+                "from_v": min(vs),
+                "from_h": max(hs),
+                "to_h": max(hs)
+            }
+            out.append(tmp)
+
+    print out
     json.dump(out, open('__gaul2modis.json', 'w'))
 
 convert()

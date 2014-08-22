@@ -3,6 +3,7 @@ import json
 
 
 def convert():
+
     with open('MODIS_GAUL.csv', 'rb') as csvfile:
         spamreader = csv.reader(csvfile, delimiter=',', quotechar='|')
         current = '102'
@@ -29,12 +30,12 @@ def convert():
                 "to_v": max(vs),
                 "gaul_label": key,
                 "from_v": min(vs),
-                "from_h": max(hs),
+                "from_h": min(hs),
                 "to_h": max(hs)
             }
             out.append(tmp)
 
-    print out
     json.dump(out, open('__gaul2modis.json', 'w'))
+    print 'Done'
 
 convert()

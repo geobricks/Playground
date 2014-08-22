@@ -4,6 +4,8 @@ import scipy.signal as signal
 import time
 from evolution import *
 from plot_u import *
+import gdal
+from gdalconst import *
 
 def gauss_kern():
     """ Returns a normalized 2D gauss kernel array for convolutions """
@@ -16,7 +18,9 @@ def gauss_kern():
     g = np.exp( -( x**2 + y**2 ) / (2*sigma**2) );
     return g / g.sum()
 
-Img = plt.imread("twoObj.bmp")
+#Img = plt.imread("/home/vortex/Desktop/LAYERS/MODIS/somalia.tif")
+ds = gdal.Open("/home/vortex/Desktop/LAYERS/MODIS/somalia.tif", GA_ReadOnly )
+Img = np.array(ds.GetRasterBand(1).ReadAsArray())
 Img = Img[::-1] 
 g = gauss_kern()
 Img_smooth = signal.convolve(Img,g,mode='same')

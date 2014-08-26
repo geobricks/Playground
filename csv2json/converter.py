@@ -5,6 +5,7 @@ import json
 def convert():
 
     with open('MODIS_GAUL.csv', 'rb') as csvfile:
+
         spamreader = csv.reader(csvfile, delimiter=',', quotechar='|')
         current = '102'
         out = []
@@ -23,12 +24,15 @@ def convert():
         for key in buffers:
             hs = []
             vs = []
+            gaul_code = None
             for buffer in buffers[key]:
                 hs.append(int(buffer[3]))
                 vs.append(int(buffer[4]))
+                gaul_code = buffer[0]
             tmp = {
                 "to_v": max(vs),
                 "gaul_label": key,
+                "gaul_code": gaul_code,
                 "from_v": min(vs),
                 "from_h": min(hs),
                 "to_h": max(hs)

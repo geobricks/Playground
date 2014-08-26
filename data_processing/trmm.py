@@ -26,8 +26,8 @@ output_folder = "/home/vortex/Desktop/LAYERS/TRMM/monthly/"
 manager = Manager(settings)
 
 
-def dt2unix(dt):
-    return int(time.mktime(dt.timetuple()) + (dt.microsecond / 10.0 ** 6))
+# def dt2unix(dt):
+#     return int(time.mktime(dt.timetuple()) + (dt.microsecond / 10.0 ** 6))
 
 
 def calc_trmm_monthly(year, month, file_prefix="trmm", calc=False):
@@ -66,7 +66,7 @@ def get_range_dates_metadata(month, year):
     #to_date = "01-" + last_day + "-" + year
     from_date = datetime.datetime(int(year), int(month), 1)
     to_date = datetime.datetime(int(year), int(month), last_day)
-    return dt2unix(from_date), dt2unix(to_date)
+    return calendar.timegm(from_date.timetuple()), calendar.timegm(to_date.timetuple())
 
 
 def calc_trmm_avg_monthly(month, file_prefix="trmm", calc=False):
@@ -134,13 +134,12 @@ def publish_layers():
         if year is None:
             year = "2014"
 
-
         # get title name
         title = name.replace("_", " ").capitalize()
 
         # get metadata
         from_date, to_date = get_range_dates_metadata(month, year)
-        creationDate = dt2unix(datetime.datetime.now())
+        creationDate = calendar.timegm(datetime.datetime.now().timetuple())
 
         # Sample of Metadata json
         log.info("Creating metadata")
@@ -157,7 +156,6 @@ def publish_layers():
         metadata_def["meContent"]["seCoverage"]["coverageSector"]["codeList"] = "Products"
         metadata_def["meContent"]["seCoverage"]["coverageSector"]["codes"] = [{"code" : "TRMM"}]
         metadata_def["meContent"]["seCoverage"]["coverageSector"]["codes"] = [{"code" : "TRMM"}]
-
 
         # TODO: in theory should be the original file the onlineResource
         metadata_def["meAccessibility"] = {}
@@ -215,26 +213,30 @@ def publish_layers():
 
 
 # Parameters
-years = ['2012', '2013', '2014']
-months = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
-product = '3B42RT'
-file_prefix ="trmm"
+# years = ['2012', '2013', '2014']
+# months = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
+# product = '3B42RT'
+# file_prefix ="trmm"
+#
+# # calculating sum
+# for year in years:
+#     for month in months:
+#         calc_trmm_monthly(year, month, file_prefix, False)
+#
+#
+# for month in months:
+#     calc_trmm_avg_monthly(month,file_prefix, False)
+#
+#
+# for year in years:
+#     for month in months:
+#         calc_trmm_da_monthly(year, month, file_prefix, False)
+#
+#
+#publish_layers()
 
-# calculating sum
-for year in years:
-    for month in months:
-        calc_trmm_monthly(year, month, file_prefix, False)
-
-
-for month in months:
-    calc_trmm_avg_monthly(month,file_prefix, False)
-
-
-for year in years:
-    for month in months:
-        calc_trmm_da_monthly(year, month, file_prefix, False)
-
-
-
-publish_layers()
+# last_day = calendar.monthrange(int(2013), int(0))[1]
+# print last_day
+from_date = datetime.datetime(int(2013), int(1), 1)
+print calendar.timegm(from_date.timetuple())
 

@@ -69,4 +69,4 @@ else:
 # merging metadata to the base raster one
 metadata_def = merge_layer_metadata("raster", metadata_def)
 
-print manager.publish_coverage("/media/vortex/16DE-3364/MODIS_250m.tif", metadata_def)
+print manager.publish_coverage("/media/vortex/16DE-3364/MODIS_250m_2.tif", metadata_def)

@@ -13,6 +13,7 @@ from pgeo.utils.log import logger
 from pgeo.metadata.metadata import merge_layer_metadata
 from data_processing.processing import process_layers
 import re
+import sys
 
 
 log = logger("playground.data_processing.earthstat")
@@ -22,8 +23,6 @@ output_folder = "/home/vortex/Desktop/LAYERS/earthstat/output/"
 
 manager = Manager(settings)
 
-def dt2unix(dt):
-    return int(time.mktime(dt.timetuple()) + (dt.microsecond / 10.0 ** 6))
 
 def process_earthstat():
     if os.path.isdir(output_folder):
@@ -37,21 +36,24 @@ def process_earthstat():
             for input_file in input_files:
                 output_file = output_folder + get_filename(input_file) + ".tif"
                 process_layers(input_file, output_file)
-
+                print output_file
 
 def publish_layers():
+    print "Publish Layers"
     files = glob.glob(output_folder + "/*.tif")
+    print files
     for f in files:
+        print f
         # read filename
         name = get_filename(f)
 
         # get commodity name
         title = name.replace("_", " ").replace("1", "").capitalize()
 
-
+        print title
 
         # create metadata
-        creationDate = dt2unix(datetime.datetime.now())
+        creationDate =  calendar.timegm(datetime.datetime.now().timetuple())
         metadata_def = {}
         metadata_def["title"] = {}
         metadata_def["title"]["EN"] = title
@@ -73,8 +75,11 @@ def publish_layers():
         # merging metata to raster metadata
         metadata_def = merge_layer_metadata("raster", metadata_def)
 
+        print metadata_def
+
         # get type
         if "area" in title:
+            print title
             manager.publish_coverage(f, metadata_def)
             # if "Banana" in title:
             #     # publish on manager
@@ -85,6 +90,6 @@ def publish_layers():
 
 
 
-
+process_earthstat()
 publish_layers()
-#process_earthstat()
+

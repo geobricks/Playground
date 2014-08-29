@@ -18,17 +18,19 @@ manager = Manager(settings)
 
 
 
-def dt2unix(dt):
-    return int(time.mktime(dt.timetuple()) + (dt.microsecond / 10.0 ** 6))
+# def dt2unix(dt):
+#     return int(time.mktime(dt.timetuple()) + (dt.microsecond / 10.0 ** 6))
+#
+# creationDate = dt2unix(datetime.datetime.now())
 
-creationDate = dt2unix(datetime.datetime.now())
+creationDate = calendar.timegm(datetime.datetime.now().timetuple())
 
 
 
 # Sample of Metadata json
 metadata_def = {}
 metadata_def["title"] = {}
-metadata_def["title"]["EN"] = "modis"
+metadata_def["title"]["EN"] = "MODIS brazilkorea"
 metadata_def["creationDate"] = creationDate
 metadata_def["meContent"] = {}
 metadata_def["meContent"]["seCoverage"] = {}
@@ -45,7 +47,7 @@ metadata_def["meContent"]["seCoverage"]["coverageSector"]["codes"] = [{"code" : 
 # TODO: in theory should be the original file the onlineResource
 metadata_def["meAccessibility"] = {}
 metadata_def["meAccessibility"]["seDistribution"] = {}
-metadata_def["meAccessibility"]["seDistribution"]["onlineResource"] = "/media/vortex/16DE-3364/MODIS_250m.tif"
+# metadata_def["meAccessibility"]["seDistribution"]["onlineResource"] = "/media/vortex/16DE-3364/MODIS_250m.tif"
 
 # TODO: added new field for the original resource (should we have two different metadata?)
 #metadata_def["meAccessibility"]["seDistribution"]["originalResource"] = output_filename
@@ -69,4 +71,4 @@ else:
 # merging metadata to the base raster one
 metadata_def = merge_layer_metadata("raster", metadata_def)
 
-print manager.publish_coverage("/media/vortex/16DE-3364/MODIS_250m_2.tif", metadata_def)
+print manager.publish_coverage("/home/vortex/Desktop/LAYERS/DISTRIBUTION/MODIS_brazil_korea.tif", metadata_def)

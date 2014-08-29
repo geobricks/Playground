@@ -14,7 +14,7 @@ process_layer_parameters = {
         "-co": "'TILED=YES'",
         "-t_srs": "EPSG:3857",
         # "-srcnodata" : 9e+20 ,
-        # "-dstnodata" : 9e+20
+        "-dstnodata" : -32000
     },
     "gdaladdo" : {
         "parameters" : {

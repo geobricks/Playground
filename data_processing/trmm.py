@@ -66,15 +66,20 @@ def get_range_dates_metadata(month, year):
     #to_date = "01-" + last_day + "-" + year
     from_date = datetime.datetime(int(year), int(month), 1)
     to_date = datetime.datetime(int(year), int(month), last_day)
+    log.info(year)
+    log.info(month)
+    log.info(from_date)
+    log.info(to_date)
     return calendar.timegm(from_date.timetuple()), calendar.timegm(to_date.timetuple())
 
 
 def calc_trmm_avg_monthly(month, file_prefix="trmm", calc=False):
     try:
-        files_path = output_folder + file_prefix + "" + month +"*"
-        file_output = output_folder + "/avg/" + file_prefix +  "_" + month + "_avg.tif"
+        files_path = output_folder + file_prefix + "_" + month +"*"
+        file_output = output_folder + "avg/" + file_prefix +  "_" + month + "_avg.tif"
         file_output_processed = output_folder + "output/" + file_prefix +  "_" + month + "_avg.tif"
 
+        log.info(files_path)
         if calc:
             calc_layers(files_path, file_output, "avg")
             process_layers(file_output, file_output_processed)
@@ -116,14 +121,15 @@ def publish_layers():
     files = glob.glob(output_folder + "output/*.tif")
 
     for f in files:
+        log.info("--------------------------------")
 
         name = get_filename(f)
 
-        print name
+        log.info("name %s %s" %(name, f))
 
         month = int(name[5:7])
 
-        print month
+        log.info("month %s" % month)
         year = None
         try:
             year = int(name[8:12])
@@ -213,30 +219,25 @@ def publish_layers():
 
 
 # Parameters
-# years = ['2012', '2013', '2014']
-# months = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
-# product = '3B42RT'
-# file_prefix ="trmm"
-#
-# # calculating sum
+years = ['2012', '2013', '2014']
+months = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
+product = '3B42RT'
+file_prefix ="trmm"
+
+# calculating sum
 # for year in years:
 #     for month in months:
-#         calc_trmm_monthly(year, month, file_prefix, False)
+#         calc_trmm_monthly(year, month, file_prefix, True)
 #
 #
 # for month in months:
-#     calc_trmm_avg_monthly(month,file_prefix, False)
+#     calc_trmm_avg_monthly(month, file_prefix, True)
 #
 #
 # for year in years:
 #     for month in months:
-#         calc_trmm_da_monthly(year, month, file_prefix, False)
-#
-#
-#publish_layers()
+#         calc_trmm_da_monthly(year, month, file_prefix, True)
 
-# last_day = calendar.monthrange(int(2013), int(0))[1]
-# print last_day
-from_date = datetime.datetime(int(2013), int(1), 1)
-print calendar.timegm(from_date.timetuple())
+
+publish_layers()
 

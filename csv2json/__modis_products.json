@@ -1,0 +1,546 @@
+[
+    {
+        "raster_type": "CMG",
+        "code": "MCD12C1",
+        "platform": "Combined",
+        "temporal_resolution": "Yearly",
+        "modis_data_product": "Land Cover Type",
+        "spatial_resolution": "5600m"
+    },
+    {
+        "raster_type": "Tile",
+        "code": "MCD12Q1",
+        "platform": "Combined",
+        "temporal_resolution": "Yearly",
+        "modis_data_product": "Land Cover Type",
+        "spatial_resolution": "500m"
+    },
+    {
+        "raster_type": "Tile",
+        "code": "MCD12Q2",
+        "platform": "Combined",
+        "temporal_resolution": "Yearly",
+        "modis_data_product": "Land Cover Dynamics",
+        "spatial_resolution": "500m"
+    },
+    {
+        "raster_type": "Tile",
+        "code": "MCD15A2",
+        "platform": "Combined",
+        "temporal_resolution": "8 day",
+        "modis_data_product": "Leaf Area Index - FPAR",
+        "spatial_resolution": "1000m"
+    },
+    {
+        "raster_type": "Tile",
+        "code": "MCD15A3",
+        "platform": "Combined",
+        "temporal_resolution": "4 day",
+        "modis_data_product": "Leaf Area Index - FPAR",
+        "spatial_resolution": "1000m"
+    },
+    {
+        "raster_type": "Tile",
+        "code": "MCD43A1",
+        "platform": "Combined",
+        "temporal_resolution": "16 day",
+        "modis_data_product": "BRDF-Albedo Model Parameters",
+        "spatial_resolution": "500m"
+    },
+    {
+        "raster_type": "Tile",
+        "code": "MCD43A2",
+        "platform": "Combined",
+        "temporal_resolution": "16 day",
+        "modis_data_product": "BRDF-Albedo Quality",
+        "spatial_resolution": "500m"
+    },
+    {
+        "raster_type": "Tile",
+        "code": "MCD43A3",
+        "platform": "Combined",
+        "temporal_resolution": "16 day",
+        "modis_data_product": "Albedo",
+        "spatial_resolution": "500m"
+    },
+    {
+        "raster_type": "Tile",
+        "code": "MCD43A4",
+        "platform": "Combined",
+        "temporal_resolution": "16 day",
+        "modis_data_product": "Nadir BRDF-Adjusted Reflectance",
+        "spatial_resolution": "500m"
+    },
+    {
+        "raster_type": "Tile",
+        "code": "MCD43B1",
+        "platform": "Combined",
+        "temporal_resolution": "16 day",
+        "modis_data_product": "BRDF-Albedo Model Parameters",
+        "spatial_resolution": "1000m"
+    },
+    {
+        "raster_type": "Tile",
+        "code": "MCD43B2",
+        "platform": "Combined",
+        "temporal_resolution": "16 day",
+        "modis_data_product": "BRDF-Albedo Quality",
+        "spatial_resolution": "1000m"
+    },
+    {
+        "raster_type": "Tile",
+        "code": "MCD43B3",
+        "platform": "Combined",
+        "temporal_resolution": "16 day",
+        "modis_data_product": "Albedo",
+        "spatial_resolution": "1000m"
+    },
+    {
+        "raster_type": "Tile",
+        "code": "MCD43B4",
+        "platform": "Combined",
+        "temporal_resolution": "16 day",
+        "modis_data_product": "Nadir BRDF-Adjusted Reflectance",
+        "spatial_resolution": "1000m"
+    },
+    {
+        "raster_type": "CMG",
+        "code": "MCD43C1",
+        "platform": "Combined",
+        "temporal_resolution": "16 day",
+        "modis_data_product": "BRDF-Albedo Model Parameters",
+        "spatial_resolution": "5600m"
+    },
+    {
+        "raster_type": "CMG",
+        "code": "MCD43C2",
+        "platform": "Combined",
+        "temporal_resolution": "16 day",
+        "modis_data_product": "BRDF-Albedo Snow-free Quality",
+        "spatial_resolution": "5600m"
+    },
+    {
+        "raster_type": "CMG",
+        "code": "MCD43C3",
+        "platform": "Combined",
+        "temporal_resolution": "16 day",
+        "modis_data_product": "Albedo",
+        "spatial_resolution": "5600m"
+    },
+    {
+        "raster_type": "CMG",
+        "code": "MCD43C4",
+        "platform": "Combined",
+        "temporal_resolution": "16 day",
+        "modis_data_product": "Nadir BRDF-Adjusted Reflectance",
+        "spatial_resolution": "5600m"
+    },
+    {
+        "raster_type": "Tile",
+        "code": "MCD45A1",
+        "platform": "Combined",
+        "temporal_resolution": "Monthly",
+        "modis_data_product": "Thermal Anomalies &amp; Fire",
+        "spatial_resolution": "500m"
+    },
+    {
+        "raster_type": "Tile",
+        "code": "MOD09A1",
+        "platform": "Terra",
+        "temporal_resolution": "8 day",
+        "modis_data_product": "Surface Reflectance Bands 1\u20137",
+        "spatial_resolution": "500m"
+    },
+    {
+        "raster_type": "CMG",
+        "code": "MOD09CMG",
+        "platform": "Terra",
+        "temporal_resolution": "Daily",
+        "modis_data_product": "Surface Reflectance Bands 1\u20137",
+        "spatial_resolution": "5600m"
+    },
+    {
+        "raster_type": "Tile",
+        "code": "MOD09GA",
+        "platform": "Terra",
+        "temporal_resolution": "Daily",
+        "modis_data_product": "Surface Reflectance Bands 1\u20137",
+        "spatial_resolution": "500/1000m"
+    },
+    {
+        "raster_type": "Tile",
+        "code": "MOD09GQ",
+        "platform": "Terra",
+        "temporal_resolution": "Daily",
+        "modis_data_product": "Surface Reflectance Bands 1\u20132",
+        "spatial_resolution": "250m"
+    },
+    {
+        "raster_type": "Tile",
+        "code": "MOD09Q1",
+        "platform": "Terra",
+        "temporal_resolution": "8 day",
+        "modis_data_product": "Surface Reflectance Bands 1\u20132",
+        "spatial_resolution": "250m"
+    },
+    {
+        "raster_type": "Tile",
+        "code": "MOD11A1",
+        "platform": "Terra",
+        "temporal_resolution": "Daily",
+        "modis_data_product": "Land Surface Temperature &amp; Emissivity",
+        "spatial_resolution": "1000m"
+    },
+    {
+        "raster_type": "Tile",
+        "code": "MOD11A2",
+        "platform": "Terra",
+        "temporal_resolution": "8 day",
+        "modis_data_product": "Land Surface Temperature &amp; Emissivity",
+        "spatial_resolution": "1000m"
+    },
+    {
+        "raster_type": "Tile",
+        "code": "MOD11B1",
+        "platform": "Terra",
+        "temporal_resolution": "Daily",
+        "modis_data_product": "Land Surface Temperature &amp; Emissivity",
+        "spatial_resolution": "5600m"
+    },
+    {
+        "raster_type": "CMG",
+        "code": "MOD11C1",
+        "platform": "Terra",
+        "temporal_resolution": "Daily",
+        "modis_data_product": "Land Surface Temperature &amp; Emissivity",
+        "spatial_resolution": "5600m"
+    },
+    {
+        "raster_type": "CMG",
+        "code": "MOD11C2",
+        "platform": "Terra",
+        "temporal_resolution": "8 day",
+        "modis_data_product": "Land Surface Temperature &amp; Emissivity",
+        "spatial_resolution": "5600m"
+    },
+    {
+        "raster_type": "CMG",
+        "code": "MOD11C3",
+        "platform": "Terra",
+        "temporal_resolution": "Monthly",
+        "modis_data_product": "Land Surface Temperature &amp; Emissivity",
+        "spatial_resolution": "5600m"
+    },
+    {
+        "raster_type": "Swath",
+        "code": "MOD11_L2",
+        "platform": "Terra",
+        "temporal_resolution": "5 min",
+        "modis_data_product": "Land Surface Temperature &amp; Emissivity",
+        "spatial_resolution": "1000m"
+    },
+    {
+        "raster_type": "Tile",
+        "code": "MOD13A1",
+        "platform": "Terra",
+        "temporal_resolution": "16 day",
+        "modis_data_product": "Vegetation Indices",
+        "spatial_resolution": "500m"
+    },
+    {
+        "raster_type": "Tile",
+        "code": "MOD13A2",
+        "platform": "Terra",
+        "temporal_resolution": "16 day",
+        "modis_data_product": "Vegetation Indices",
+        "spatial_resolution": "1000m"
+    },
+    {
+        "raster_type": "Tile",
+        "code": "MOD13A3",
+        "platform": "Terra",
+        "temporal_resolution": "Monthly",
+        "modis_data_product": "Vegetation Indices",
+        "spatial_resolution": "1000m"
+    },
+    {
+        "raster_type": "CMG",
+        "code": "MOD13C1",
+        "platform": "Terra",
+        "temporal_resolution": "16 day",
+        "modis_data_product": "Vegetation Indices",
+        "spatial_resolution": "5600m"
+    },
+    {
+        "raster_type": "CMG",
+        "code": "MOD13C2",
+        "platform": "Terra",
+        "temporal_resolution": "Monthly",
+        "modis_data_product": "Vegetation Indices",
+        "spatial_resolution": "5600m"
+    },
+    {
+        "raster_type": "Tile",
+        "code": "MOD13Q1",
+        "platform": "Terra",
+        "temporal_resolution": "16 day",
+        "modis_data_product": "Vegetation Indices",
+        "spatial_resolution": "250m"
+    },
+    {
+        "raster_type": "Swath",
+        "code": "MOD14",
+        "platform": "Terra",
+        "temporal_resolution": "5 min",
+        "modis_data_product": "Thermal Anomalies &amp; Fire",
+        "spatial_resolution": "1000m"
+    },
+    {
+        "raster_type": "Tile",
+        "code": "MOD14A1",
+        "platform": "Terra",
+        "temporal_resolution": "Daily",
+        "modis_data_product": "Thermal Anomalies &amp; Fire",
+        "spatial_resolution": "1000m"
+    },
+    {
+        "raster_type": "Tile",
+        "code": "MOD14A2",
+        "platform": "Terra",
+        "temporal_resolution": "8 day",
+        "modis_data_product": "Thermal Anomalies &amp; Fire",
+        "spatial_resolution": "1000m"
+    },
+    {
+        "raster_type": "Tile",
+        "code": "MOD15A2",
+        "platform": "Terra",
+        "temporal_resolution": "8 day",
+        "modis_data_product": "Leaf Area Index - FPAR",
+        "spatial_resolution": "1000m"
+    },
+    {
+        "raster_type": "Tile",
+        "code": "MOD17A2",
+        "platform": "Terra",
+        "temporal_resolution": "8 day",
+        "modis_data_product": "Gross Primary Productivity",
+        "spatial_resolution": "1000m"
+    },
+    {
+        "raster_type": "Tile",
+        "code": "MOD17A3",
+        "platform": "Terra",
+        "temporal_resolution": "Yearly",
+        "modis_data_product": "Net Primary Productivity",
+        "spatial_resolution": "1000m"
+    },
+    {
+        "raster_type": "Tile",
+        "code": "MOD44A",
+        "platform": "Terra",
+        "temporal_resolution": "96 day",
+        "modis_data_product": "Vegetation Continuous Cover",
+        "spatial_resolution": "250m"
+    },
+    {
+        "raster_type": "Tile",
+        "code": "MOD44B",
+        "platform": "Terra",
+        "temporal_resolution": "Yearly",
+        "modis_data_product": "Vegetation Continuous Fields",
+        "spatial_resolution": "250m"
+    },
+    {
+        "raster_type": "Tile",
+        "code": "MOD44W",
+        "platform": "Terra",
+        "temporal_resolution": "None",
+        "modis_data_product": "Land Water Mask Derived",
+        "spatial_resolution": "250m"
+    },
+    {
+        "raster_type": "Tile",
+        "code": "MYD09A1",
+        "platform": "Aqua",
+        "temporal_resolution": "8 day",
+        "modis_data_product": "Surface Reflectance Bands 1\u20137",
+        "spatial_resolution": "500m"
+    },
+    {
+        "raster_type": "CMG",
+        "code": "MYD09CMG",
+        "platform": "Aqua",
+        "temporal_resolution": "Daily",
+        "modis_data_product": "Surface Reflectance Bands 1\u20137",
+        "spatial_resolution": "5600m"
+    },
+    {
+        "raster_type": "Tile",
+        "code": "MYD09GA",
+        "platform": "Aqua",
+        "temporal_resolution": "Daily",
+        "modis_data_product": "Surface Reflectance Bands 1\u20137",
+        "spatial_resolution": "500/1000m"
+    },
+    {
+        "raster_type": "Tile",
+        "code": "MYD09GQ",
+        "platform": "Aqua",
+        "temporal_resolution": "Daily",
+        "modis_data_product": "Surface Reflectance Bands 1\u20132",
+        "spatial_resolution": "250m"
+    },
+    {
+        "raster_type": "Tile",
+        "code": "MYD09Q1",
+        "platform": "Aqua",
+        "temporal_resolution": "8 day",
+        "modis_data_product": "Surface Reflectance Bands 1\u20132",
+        "spatial_resolution": "250m"
+    },
+    {
+        "raster_type": "Tile",
+        "code": "MYD11A1",
+        "platform": "Aqua",
+        "temporal_resolution": "Daily",
+        "modis_data_product": "Land Surface Temperature &amp; Emissivity",
+        "spatial_resolution": "1000m"
+    },
+    {
+        "raster_type": "Tile",
+        "code": "MYD11A2",
+        "platform": "Aqua",
+        "temporal_resolution": "8 day",
+        "modis_data_product": "Land Surface Temperature &amp; Emissivity",
+        "spatial_resolution": "1000m"
+    },
+    {
+        "raster_type": "Tile",
+        "code": "MYD11B1",
+        "platform": "Aqua",
+        "temporal_resolution": "Daily",
+        "modis_data_product": "Land Surface Temperature &amp; Emissivity",
+        "spatial_resolution": "5600m"
+    },
+    {
+        "raster_type": "CMG",
+        "code": "MYD11C1",
+        "platform": "Aqua",
+        "temporal_resolution": "Daily",
+        "modis_data_product": "Land Surface Temperature &amp; Emissivity",
+        "spatial_resolution": "5600m"
+    },
+    {
+        "raster_type": "CMG",
+        "code": "MYD11C2",
+        "platform": "Aqua",
+        "temporal_resolution": "8 day",
+        "modis_data_product": "Land Surface Temperature &amp; Emissivity",
+        "spatial_resolution": "5600m"
+    },
+    {
+        "raster_type": "CMG",
+        "code": "MYD11C3",
+        "platform": "Aqua",
+        "temporal_resolution": "Monthly",
+        "modis_data_product": "Land Surface Temperature &amp; Emissivity",
+        "spatial_resolution": "5600m"
+    },
+    {
+        "raster_type": "Swath",
+        "code": "MYD11_L2",
+        "platform": "Aqua",
+        "temporal_resolution": "5 min",
+        "modis_data_product": "Land Surface Temperature &amp; Emissivity",
+        "spatial_resolution": "1000m"
+    },
+    {
+        "raster_type": "Tile",
+        "code": "MYD13A1",
+        "platform": "Aqua",
+        "temporal_resolution": "16 day",
+        "modis_data_product": "Vegetation Indices",
+        "spatial_resolution": "500m"
+    },
+    {
+        "raster_type": "Tile",
+        "code": "MYD13A2",
+        "platform": "Aqua",
+        "temporal_resolution": "16 day",
+        "modis_data_product": "Vegetation Indices",
+        "spatial_resolution": "1000m"
+    },
+    {
+        "raster_type": "Tile",
+        "code": "MYD13A3",
+        "platform": "Aqua",
+        "temporal_resolution": "Monthly",
+        "modis_data_product": "Vegetation Indices",
+        "spatial_resolution": "1000m"
+    },
+    {
+        "raster_type": "CMG",
+        "code": "MYD13C1",
+        "platform": "Aqua",
+        "temporal_resolution": "16 day",
+        "modis_data_product": "Vegetation Indices",
+        "spatial_resolution": "5600m"
+    },
+    {
+        "raster_type": "CMG",
+        "code": "MYD13C2",
+        "platform": "Aqua",
+        "temporal_resolution": "Monthly",
+        "modis_data_product": "Vegetation Indices",
+        "spatial_resolution": "5600m"
+    },
+    {
+        "raster_type": "Tile",
+        "code": "MYD13Q1",
+        "platform": "Aqua",
+        "temporal_resolution": "16 day",
+        "modis_data_product": "Vegetation Indices",
+        "spatial_resolution": "250m"
+    },
+    {
+        "raster_type": "Swath",
+        "code": "MYD14",
+        "platform": "Aqua",
+        "temporal_resolution": "5 min",
+        "modis_data_product": "Thermal Anomalies &amp; Fire",
+        "spatial_resolution": "1000m"
+    },
+    {
+        "raster_type": "Tile",
+        "code": "MYD14A1",
+        "platform": "Aqua",
+        "temporal_resolution": "Daily",
+        "modis_data_product": "Thermal Anomalies &amp; Fire",
+        "spatial_resolution": "1000m"
+    },
+    {
+        "raster_type": "Tile",
+        "code": "MYD14A2",
+        "platform": "Aqua",
+        "temporal_resolution": "8 day",
+        "modis_data_product": "Thermal Anomalies &amp; Fire",
+        "spatial_resolution": "1000m"
+    },
+    {
+        "raster_type": "Tile",
+        "code": "MYD15A2",
+        "platform": "Aqua",
+        "temporal_resolution": "8 day",
+        "modis_data_product": "Leaf Area Index - FPAR",
+        "spatial_resolution": "1000m"
+    },
+    {
+        "raster_type": "Tile",
+        "code": "MYD17A2",
+        "platform": "Aqua",
+        "temporal_resolution": "8 day",
+        "modis_data_product": "Gross Primary Productivity",
+        "spatial_resolution": "1000m"
+    }
+]

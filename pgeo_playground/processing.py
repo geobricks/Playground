@@ -266,123 +266,207 @@ obj = {
     "process" : [
         {
           "extract_bands": ""
-        },
-        {
-            "gdal_merge": {
-                "prefix": "gdal_merge_",
-                "extension": "tif"
-            }
-        },
-        {
-             "get_pixel_size" : "{{PIXEL_SIZE}}/111195.123132"
-        },
-        {
-            "gdalwarp": {
-                "opt": {
-                    "-multi": "",
-                    "-overwrite": "",
-                    "-of": "GTiff",
-                    "-tr": "{{PIXEL_SIZE}} -{{PIXEL_SIZE}}",
-                    "-s_srs": "'+proj=sinu +R=6371007.181 +nadgrids=@null +wktext'",
-                    "-co": "'TILED=YES'",
-                    "-t_srs": "EPSG:4326",
-                    "-srcnodata": -3000,
-                    "-dstnodata": -3000
-                },
-                "prefix" : "gdalwarp_",
-                "extension": "tif"
-            }
-        },
-        {
-            "gdaladdo": {
-                "parameters": {
-                    "-r": "average"
-                },
-                "overviews_levels": "2 4 8 16"
-            }
         }
     ]
 }
-
-# process(obj)
+output_files = process(obj)
 
 obj = {
-    "source_path": ["/home/vortex/Desktop/LAYERS/MODIS/033/*.hdf"],
-    "output_path": "/home/vortex/Desktop/LAYERS/MODIS/033/output_3857/",
+    "source_path": output_files,
+    "output_path": "/home/vortex/Desktop/LAYERS/MODIS/033/output/",
     "output_file_name": "layer.geotiff",
     "band": 1,
     "process" : [
         {
-            "extract_bands": ""
+                    "gdal_merge": {
+                        "prefix": "gdal_merge_",
+                        "extension": "tif"
+                    }
         },
-        {
-            "gdal_merge": {
-                "prefix": "gdal_merge_",
-                "extension": "tif"
-            }
-        },
-        {
-            "get_pixel_size" : "{{PIXEL_SIZE}}"
-        },
-        {
-            "gdalwarp": {
-                "opt": {
-                    "-multi": "",
-                    "-overwrite": "",
-                    "-of": "GTiff",
-                    # "-tr": "{{PIXEL_SIZE}} -{{PIXEL_SIZE}}",
-                    "-s_srs": "'+proj=sinu +R=6371007.181 +nadgrids=@null +wktext'",
-                    "-co": "'TILED=YES'",
-                    "-t_srs": "EPSG:3857",
-                    "-srcnodata": -3000,
-                    "-dstnodata": -3000
-                },
-                "prefix" : "gdalwarp_",
-                "extension": "tif"
-            }
-        },
-        {
-            "gdaladdo": {
-                "parameters": {
-                    "-r": "average"
-                },
-                "overviews_levels": "2 4 8 16"
-            }
-        }
     ]
 }
+output_files = process(obj)
 
-process(obj)
 
 obj = {
-    "source_path": ["/home/vortex/Desktop/LAYERS/TRMM/2013/10/3B42RT.2013100100.7.1day.tif"],
-    "output_path": "/home/vortex/Desktop/LAYERS/TRMM/2013/10/output/",
+    "source_path": output_files,
+    "output_path": "/home/vortex/Desktop/LAYERS/MODIS/033/output/",
     "output_file_name": "layer.geotiff",
     "band": 1,
     "process" : [
-        {
-            "gdalwarp": {
-                "opt": {
-                    "-multi": "",
-                    "-overwrite": "",
-                    "-of": "GTiff",
-                    "-s_srs": "EPSG:4326",
-                    "-co": "'TILED=YES'",
-                    "-t_srs": "EPSG:3857"
+                {
+                     "get_pixel_size" : "{{PIXEL_SIZE}}/111195.123132"
                 },
-                "prefix" : "gdalwarp_",
-                "extension": "tif"
-            }
-        },
-        {
-            "gdaladdo": {
-                "parameters": {
-                    "-r": "average"
-                },
-                "overviews_levels": "2 4 8 16"
-            }
-        }
+                {
+                    "gdalwarp": {
+                        "opt": {
+                            "-multi": "",
+                            "-overwrite": "",
+                            "-of": "GTiff",
+                            "-tr": "{{PIXEL_SIZE}} -{{PIXEL_SIZE}}",
+                            "-s_srs": "'+proj=sinu +R=6371007.181 +nadgrids=@null +wktext'",
+                            "-co": "'TILED=YES'",
+                            "-t_srs": "EPSG:4326",
+                            "-srcnodata": -3000,
+                            "-dstnodata": -3000
+                        },
+                        "prefix" : "gdalwarp_",
+                        "extension": "tif"
+                    }
+                }
+        ]
+}
+output_files = process(obj)
+
+
+obj = {
+    "source_path": output_files,
+    "output_path": "/home/vortex/Desktop/LAYERS/MODIS/033/output/",
+    "output_file_name": "layer.geotiff",
+    "band": 1,
+    "process" : [
+                {
+                    "gdaladdo": {
+                        "parameters": {
+                            "-r": "average"
+                        },
+                        "overviews_levels": "2 4 8 16"
+                    }
+                }
     ]
 }
+output_files = process(obj)
 
+
+
+
+# obj = {
+#     "source_path": ["/home/vortex/Desktop/LAYERS/MODIS/033/*.hdf"],
+#     "output_path": "/home/vortex/Desktop/LAYERS/MODIS/033/output/",
+#     "output_file_name": "layer.geotiff",
+#     "band": 1,
+#     "process" : [
+#         {
+#           "extract_bands": ""
+#         },
+#         {
+#             "gdal_merge": {
+#                 "prefix": "gdal_merge_",
+#                 "extension": "tif"
+#             }
+#         },
+#         {
+#              "get_pixel_size" : "{{PIXEL_SIZE}}/111195.123132"
+#         },
+#         {
+#             "gdalwarp": {
+#                 "opt": {
+#                     "-multi": "",
+#                     "-overwrite": "",
+#                     "-of": "GTiff",
+#                     "-tr": "{{PIXEL_SIZE}} -{{PIXEL_SIZE}}",
+#                     "-s_srs": "'+proj=sinu +R=6371007.181 +nadgrids=@null +wktext'",
+#                     "-co": "'TILED=YES'",
+#                     "-t_srs": "EPSG:4326",
+#                     "-srcnodata": -3000,
+#                     "-dstnodata": -3000
+#                 },
+#                 "prefix" : "gdalwarp_",
+#                 "extension": "tif"
+#             }
+#         },
+#         {
+#             "gdaladdo": {
+#                 "parameters": {
+#                     "-r": "average"
+#                 },
+#                 "overviews_levels": "2 4 8 16"
+#             }
+#         }
+#     ]
+# }
+#
 # process(obj)
+#
+# obj = {
+#     "source_path": ["/home/vortex/Desktop/LAYERS/MODIS/033/*.hdf"],
+#     "output_path": "/home/vortex/Desktop/LAYERS/MODIS/033/output_3857/",
+#     "output_file_name": "layer.geotiff",
+#     "band": 1,
+#     "process" : [
+#         {
+#             "extract_bands": ""
+#         },
+#         {
+#             "gdal_merge": {
+#                 "prefix": "gdal_merge_",
+#                 "extension": "tif"
+#             }
+#         },
+#         {
+#             "get_pixel_size" : "{{PIXEL_SIZE}}"
+#         },
+#         {
+#             "gdalwarp": {
+#                 "opt": {
+#                     "-multi": "",
+#                     "-overwrite": "",
+#                     "-of": "GTiff",
+#                     # "-tr": "{{PIXEL_SIZE}} -{{PIXEL_SIZE}}",
+#                     "-s_srs": "'+proj=sinu +R=6371007.181 +nadgrids=@null +wktext'",
+#                     "-co": "'TILED=YES'",
+#                     "-t_srs": "EPSG:3857",
+#                     "-srcnodata": -3000,
+#                     "-dstnodata": -3000
+#                 },
+#                 "prefix" : "gdalwarp_",
+#                 "extension": "tif"
+#             }
+#         },
+#         {
+#             "gdaladdo": {
+#                 "parameters": {
+#                     "-r": "average"
+#                 },
+#                 "overviews_levels": "2 4 8 16"
+#             }
+#         }
+#     ]
+# }
+#
+# process(obj)
+#
+# obj = {
+#     "source_path": ["/home/vortex/Desktop/LAYERS/TRMM/2013/10/3B42RT.2013100100.7.1day.tif"],
+#     "output_path": "/home/vortex/Desktop/LAYERS/TRMM/2013/10/output/",
+#     "output_file_name": "layer.geotiff",
+#     "band": 1,
+#     "process" : [
+#         {
+#             "gdalwarp": {
+#                 "opt": {
+#                     "-multi": "",
+#                     "-overwrite": "",
+#                     "-of": "GTiff",
+#                     "-s_srs": "EPSG:4326",
+#                     "-co": "'TILED=YES'",
+#                     "-t_srs": "EPSG:3857"
+#                 },
+#                 "prefix" : "gdalwarp_",
+#                 "extension": "tif"
+#             }
+#         },
+#         {
+#             "gdaladdo": {
+#                 "parameters": {
+#                     "-r": "average"
+#                 },
+#                 "overviews_levels": "2 4 8 16"
+#             }
+#         }
+#     ]
+# }
+# process(obj)
+
+
+

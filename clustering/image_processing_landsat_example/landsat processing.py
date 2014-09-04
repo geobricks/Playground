@@ -72,10 +72,11 @@ def correct_image(input_file, output_file):
     print error
 
 
-path = "/home/vortex/Desktop/LAYERS/lorenzo/tiles/2003_02/LE71690602003035SGS00/"
+# path = "/home/vortex/Desktop/LAYERS/lorenzo/tiles/2003_02/LE71690602003035SGS00/"
+path = "/home/vortex/Desktop/LAYERS/lorenzo/tiles/2003_02/LE71690612003035SGS00/"
 path_rgb = path + "rgb/"
 
-input_file = path + "LE71690602003035SGS00"
+input_file = path + "LE71690612003035SGS00"
 output_file_band = path_rgb + "projected"
 
 # extracting bands
@@ -102,8 +103,6 @@ convert_true_color(output_file_rgb, output_file_corrected)
 
 
 
-
-#projected_5.tif threshold
 
 
 

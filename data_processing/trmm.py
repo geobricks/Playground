@@ -232,6 +232,9 @@ file_prefix ="trmm"
 #
 # for month in months:
 #     calc_trmm_avg_monthly(month, file_prefix, True)
+
+# for month in months:
+#     calc_trmm_avg_monthly(month, file_prefix, True)
 #
 #
 # for year in years:

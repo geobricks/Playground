@@ -130,7 +130,7 @@ def create_csv_merge(output_file, stats1, stats2):
         json_data1 = json.loads(json_string1)
         json_data2 = json.loads(json_string2)
 
-        csv_file.writerow(["adm1_code", "adm1_label", "valueX", "valueY"])
+        csv_file.writerow(["code", "label", "valueX", "valueY"])
         for data1 in json_data1:
             for data2 in json_data2:
                 try:

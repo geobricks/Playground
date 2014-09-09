@@ -6,8 +6,8 @@ log = log.logger(__name__)
 
 year = '2001'
 month = '01'
-from_day = 2
-to_day = 2
+from_day = 1
+to_day = 1
 days = map(lambda x: str(x) if x > 9 else '0'+str(x), range(int(from_day), 1+int(to_day)))
 
 tab_id = 'tab_0'
@@ -27,5 +27,5 @@ for day in days:
     }
     bulk_download_objects.append(bdo)
 
-mgr = BulkDownloadManager('trmm2', None, bulk_download_objects, tab_id, 'sum')
+mgr = BulkDownloadManager('trmm2', bulk_download_objects, tab_id, 'sum')
 target_dir = mgr.run()

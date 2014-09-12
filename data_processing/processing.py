@@ -10,11 +10,11 @@ process_layer_parameters = {
         "-of" : "GTiff",
         #"-tr" : "0.00833333, -0.00833333",
         #"-s_srs" :"'+proj=sinu +R=6371007.181 +nadgrids=@null +wktext'",
-        "-s_srs" :"EPSG:4326",
+        "-s_srs" :"EPSG:3857",
         "-co": "'TILED=YES'",
         "-t_srs": "EPSG:3857",
-        # "-srcnodata" : 9e+20 ,
-        "-dstnodata" : -32000
+        # "-srcnodata" : "nodata" ,
+        # "-dstnodata" : "nodata" ,
     },
     "gdaladdo" : {
         "parameters" : {
@@ -28,8 +28,8 @@ def process_layers(input_path, output_file, parameters=process_layer_parameters)
 
     no_data_value = get_nodata_value(input_path)
     print "NO DATA VALUE %s" % no_data_value
-    parameters["gdalwarp"]["-srcnodata"]  = no_data_value
-    parameters["gdalwarp"]["-dstnodata"]  = -32000
+    # parameters["gdalwarp"]["-srcnodata"]  = no_data_value
+    # parameters["gdalwarp"]["-dstnodata"]  = 0
 
     gdal_warp_layer = filesystem.create_tmp_filename()
     cmd = "gdalwarp "

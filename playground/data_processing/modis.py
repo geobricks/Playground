@@ -5,12 +5,13 @@ import time
 import json
 import os
 import glob
-from pgeo.config.settings import settings, read_template
+from playground.config.settings import settings
+# from pgeo.config.settings import settings, read_template
 from pgeo.metadata.metadata import Metadata
 from pgeo.manager.manager import Manager
 from pgeo.utils.log import logger
-from pgeo.metadata.metadata import merge_layer_metadata
-from data_processing.processing import process_layers
+# from pgeo.metadata.metadata import merge_layer_metadata
+#from data_processing.processing import process_layers
 from pgeo.utils.filesystem import get_filename
 
 
@@ -69,6 +70,8 @@ else:
 
 
 # merging metadata to the base raster one
-metadata_def = merge_layer_metadata("raster", metadata_def)
+metadata_def = manager.metadata.merge_layer_metadata("raster", metadata_def)
 
-print manager.publish_coverage("/home/vortex/Desktop/LAYERS/DISTRIBUTION/MODIS_brazil_korea.tif", metadata_def)
+print metadata_def
+
+print manager.publish_coverage("/home/kalimaha/Desktop/MODIS/MOD13A2/2014/001/OUTPUT_NDVI/final.tiff", metadata_def)

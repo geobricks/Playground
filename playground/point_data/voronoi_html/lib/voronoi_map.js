@@ -96,6 +96,7 @@ voronoiMap = function(map, url, initialSelections) {
         drawLimit = bounds.pad(0.4);
 
     filteredPoints = pointsFilteredToSelectedTypes().filter(function(d) {
+       // console.log(d.latitude);
       var latlng = new L.LatLng(d.latitude, d.longitude);
 
       if (!drawLimit.contains(latlng)) { return false };
@@ -111,7 +112,12 @@ voronoiMap = function(map, url, initialSelections) {
       return true;
     });
 
-    voronoi(filteredPoints).forEach(function(d) { d.point.cell = d; });
+    //console.log(filteredPoints);
+
+    voronoi(filteredPoints).forEach(function(d) {
+        d.point.cell = d;
+
+    });
 
     var svg = d3.select(map.getPanes().overlayPane).append("svg")
       .attr('id', 'overlay')
@@ -126,24 +132,25 @@ voronoiMap = function(map, url, initialSelections) {
 
     var svgPoints = g.attr("class", "points")
       .selectAll("g")
-        .data(filteredPoints)
+      .data(filteredPoints)
       .enter().append("g")
-        .attr("class", "point");
+      .attr("class", "point");
 
     var buildPathFromPoint = function(point) {
+      console.log("M" + point.cell.join("L") + "Z");
       return "M" + point.cell.join("L") + "Z";
     }
 
     svgPoints.append("path")
       .attr("class", "point-cell")
       .attr("d", buildPathFromPoint)
-      .on('click', selectPoint)
-      .classed("selected", function(d) { return lastSelectedPoint == d} );
+//      .on('click', selectPoint)
+//      .classed("selected", function(d) { return lastSelectedPoint == d} );
 
-    svgPoints.append("circle")
-      .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
-      .style('fill', function(d) { return '#' + d.color } )
-      .attr("r", 2);
+//    svgPoints.append("circle")
+//      .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
+//      .style('fill', function(d) { return '#' + d.color } )
+//      .attr("r", 2);
   }
 
   var mapLayer = {

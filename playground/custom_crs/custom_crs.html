@@ -1,10 +1,57 @@
 <!DOCTYPE html>
 <html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <title></title>
+<head>
+    <title>Leaflet GeoJSON Example</title>
+    <meta charset="utf-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+    <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+    <script src="proj4Leaflet/lib/proj4-compressed.js"></script>
+    <script src="proj4Leaflet/src/proj4leaflet.js"></script>
+
 </head>
 <body>
+<div id="map" style="width: 1000px; height: 600px"></div>
 
+
+<script>
+//    var crs = new L.Proj.CRS('EPSG:54009',
+//            '+proj=moll +lon_0=0 +x_0=0 +y_0=0 +ellps=WGS84 +datum=WGS84 +units=m no_defs',
+//            {
+//                resolutions: [
+//                    18040112, 9040112, 4540112, 819, 409, 204
+//                ]
+//            },
+//            {
+//                origin: [ -18040095.696147296577692,9020047.848073646426201]
+//            }
+//    );
+
+    var crs = new L.Proj.CRS('EPSG:54009',
+            '+proj=moll +lon_0=0 +x_0=0 +y_0=0 +ellps=WGS84 +datum=WGS84 +units=m no_defs', {
+        resolutions: [267000493, 133500247,66750124,33375062]
+    });
+
+    console.log(crs);
+
+    var map = new L.Map('map', {
+        crs: crs,
+        continuousWorld: false,
+        worldCopyJump: false
+    });
+    console.log(map);
+
+    var l = L.tileLayer.wms("http://localhost:9090/geoserver/wms", {
+        layers: 'fenix:G2014_2013_0_mid_mollweide',
+        styles: 'polygon_transparent',
+        format: 'image/png',
+        transparent: true
+    }).addTo(map);
+
+    map.setView([0, 0], 1);
+
+</script>
 </body>
 </html>

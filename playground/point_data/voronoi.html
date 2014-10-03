@@ -1,10 +1,70 @@
 <!DOCTYPE html>
 <html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <title></title>
+<head>
+    <title>Leaflet GeoJSON Example</title>
+    <meta charset="utf-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+    <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+
 </head>
 <body>
+<div id="map" style="width: 600px; height: 400px"></div>
 
+
+<script>
+    var map = L.map('map').setView([0, 0], 2);
+
+    L.tileLayer('https://{s}.tiles.mapbox.com/v3/{id}/{z}/{x}/{y}.png', {
+        maxZoom: 18,
+        attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
+                '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+                'Imagery © <a href="http://mapbox.com">Mapbox</a>',
+        id: 'examples.map-20v6611k'
+    }).addTo(map);
+
+
+    var geojsonFeature = {
+        "type": "Feature",
+        "properties": {
+            "name": "Coors Field",
+            "amenity": "Baseball Stadium",
+            "popupContent": "This is where the Rockies play!"
+        },
+        "geometry": {
+            "type": "Polygon",
+            "coordinates":
+                    [[
+                [-1.20460341972,15.5642580393],[51.3638396128,-460.139885501]
+                ,[-0.217286758203,0.0142137402823],[51.0224993492,51.6753604474]
+                ,[-0.217286758203,-0.941725392953],[51.0224993492,51.5215512497]
+            ]]
+        }
+    };
+
+
+    L.geoJson(geojsonFeature).addTo(map);
+
+    var points = {
+        "type": "Feature",
+        "properties": {
+            "name": "Coors Field",
+            "amenity": "Baseball Stadium",
+            "popupContent": "This is where the Rockies play!"
+        },
+        "geometry": {
+            "type": "MultiPoint",
+            "coordinates":
+                    [[-3.02827, 51.81828], [-1.27967, 51.67208], [-1.87016, 52.21646], [-2.23694, 53.30269], [0.49749, 51.28618], [-0.96797, 51.15253], [-2.36511, 53.40541], [-0.60628, 51.67757], [-0.4932, 52.0325], [-1.48122, 51.2085]]
+
+        }
+    };
+
+    L.geoJson(points).addTo(map);
+
+
+</script>
 </body>
 </html>

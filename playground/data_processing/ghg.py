@@ -2,12 +2,12 @@ import calendar
 import glob
 import os
 import datetime
-from pgeo.config.settings import settings, read_template
+# from pgeo.config.settings import settings, read_template
 from pgeo.metadata.metadata import Metadata
 from pgeo.manager.manager import Manager
 from pgeo.utils.log import logger
-from pgeo.metadata.metadata import merge_layer_metadata
-from data_processing.processing import process_layers
+# from pgeo.metadata.metadata import merge_layer_metadata
+# from data_processing.processing import process_layers
 from pgeo.utils.filesystem import get_filename
 
 

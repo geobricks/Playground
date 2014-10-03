@@ -31,7 +31,7 @@ creationDate = calendar.timegm(datetime.datetime.now().timetuple())
 # Sample of Metadata json
 metadata_def = {}
 metadata_def["title"] = {}
-metadata_def["title"]["EN"] = "MODIS brazilkorea"
+metadata_def["title"]["EN"] = "land_cover_maryland_2009"
 metadata_def["creationDate"] = creationDate
 metadata_def["meContent"] = {}
 metadata_def["meContent"]["seCoverage"] = {}
@@ -41,8 +41,8 @@ metadata_def["meContent"]["seCoverage"]["coverageTime"]["to"] = creationDate
 
 metadata_def["meContent"]["seCoverage"]["coverageSector"] = {}
 metadata_def["meContent"]["seCoverage"]["coverageSector"]["codeList"] = "Products"
-metadata_def["meContent"]["seCoverage"]["coverageSector"]["codes"] = [{"code" : "MODIS"}]
-metadata_def["meContent"]["seCoverage"]["coverageSector"]["codes"] = [{"code" : "MODIS"}]
+metadata_def["meContent"]["seCoverage"]["coverageSector"]["codes"] = [{"code" : "MODIS_LAND_COVER"}]
+metadata_def["meContent"]["seCoverage"]["coverageSector"]["codes"] = [{"code" : "MODIS_LAND_COVER"}]
 
 
 # TODO: in theory should be the original file the onlineResource
@@ -64,9 +64,9 @@ metadata_def["meStatisticalProcessing"]["seDatasource"]["seDataCompilation"]["ag
 metadata_def["meSpatialRepresentation"] = {}
 metadata_def["meSpatialRepresentation"]["seDefaultStyle"] = {}
 if aggregationProcessing == "da":
-    metadata_def["meSpatialRepresentation"]["seDefaultStyle"]["name"] = "rainfall_" + aggregationProcessing
+    metadata_def["meSpatialRepresentation"]["seDefaultStyle"]["name"] = "land_cover_" + aggregationProcessing
 else:
-    metadata_def["meSpatialRepresentation"]["seDefaultStyle"]["name"] = "rainfall"
+    metadata_def["meSpatialRepresentation"]["seDefaultStyle"]["name"] = "land_cover"
 
 
 # merging metadata to the base raster one
@@ -74,4 +74,4 @@ metadata_def = manager.metadata.merge_layer_metadata("raster", metadata_def)
 
 print metadata_def
 
-print manager.publish_coverage("/home/kalimaha/Desktop/MODIS/MOD13A2/2014/001/OUTPUT_NDVI/final.tiff", metadata_def)
+print manager.publish_coverage("/home/vortex/programs/SERVERS/tomcat_geoservers/data/data/fenix/land_cover_maryland_2009_old/land_cover_maryland_2009.geotiff", metadata_def)

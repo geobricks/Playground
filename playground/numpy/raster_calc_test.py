@@ -1,10 +1,10 @@
 # script to count the number of non-zero pixels in the first band
-import os, sys, ogr, gdal, utils, numpy
+import os, sys, ogr, gdal, numpy
 from gdalconst import *
 import raster_calc
 import time
 
-gdal.AllRegister()
+#gdal.AllRegister()
 
 
 def test(file_path):
@@ -31,18 +31,24 @@ def test_sum(file_path1, file_path2):
     formulaTime = time.time()
 
 
-    #print raster_calc.apply_formula(band1, rows1, cols1)
+    #print raster_calc.apply_formula(band1, rows1, cols1)c
     dst_ds = raster_calc.apply_formula_sum(band1, band2, rows1, cols1)
     dst_ds.SetGeoTransform(ds1.GetGeoTransform())
     dst_ds.SetProjection(ds1.GetProjection())
+    # dst_ds.FlushCache()
+    # band1.FlushCache()
+    # dst_ds.FlushCache()
+    # band2.FlushCache()
+    # dst_ds = None
+    # del dst_ds, band1, band2
     endTime = time.time()
     print 'The script took ' + str(formulaTime - startTime) + ' seconds'
     print 'The script took ' + str(endTime - startTime) + ' seconds'
 
 
 # start timing
-file_name = '/home/vortex/Desktop/LAYERS/MODIS_5600/GHG_INDONESIA/land_cover_maryland.tiff'
-
+#file_name = '/home/vortex/programs/SERVERS/tomcat_geoservers/data/data/fenix/land_cover_maryland_2009/land_cover_maryland_2009.geotiff'
+file_name = '/home/vortex/programs/SERVERS/tomcat_geoservers/data/data/fenix/burned_areas_182_2014/burned_areas_182_2014.geotiff'
 #test(file_name)
 test_sum(file_name, file_name)
 

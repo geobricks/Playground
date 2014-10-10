@@ -1,4 +1,4 @@
-import os, sys, ogr, gdal, utils, numpy
+import os, sys, ogr, gdal, numpy
 from gdalconst import *
 import sys
 from pgeo.utils.filesystem import create_tmp_filename
@@ -42,6 +42,7 @@ def apply_formula(band, rows, cols, formula=None):
     count = 0
     xBlockSize, yBlockSize = get_blocksize(band)
     for i in range(0, rows, yBlockSize):
+        sys.stdout.write(".")
         numRows = update_numRowsCols(i, rows, yBlockSize)
         for j in range(0, cols, xBlockSize):
             numCols = update_numRowsCols(j, cols, xBlockSize)
@@ -53,11 +54,12 @@ def apply_formula(band, rows, cols, formula=None):
 
 def apply_formula_sum(band1, band2, rows, cols, type=GDT_Float32, formula=None):
 
-    #outDs = driver.Create("/home/vortex/Desktop/LAYERS/MODIS_5600/GHG_INDONESIA/land_cover_maryland.tiff/reclass_40.tif", cols, rows, 1, type)
-
     tmp_filename = create_tmp_filename('', 'tiff')
     print tmp_filename
-    output_raster = gdal.GetDriverByName('GTiff').Create(tmp_filename,cols, rows, 1, type)  # Open the file
+    driver = gdal.GetDriverByName('GTiff')
+    output_raster = driver.Create(tmp_filename, cols, rows, 1, type)  # Open the file
+
+    #output_raster = gdal.GetDriverByName('GTiff').Create(tmp_filename,cols, rows, 1, type)  # Open the file
 
     #TODO remove count
     count = 0

@@ -5,6 +5,8 @@
     <meta charset="utf-8" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+
 
     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
     <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
@@ -63,6 +65,22 @@
     };
 
     L.geoJson(points).addTo(map);
+
+
+//    var data = {};
+//    data.datasource = 'faostat2';
+//    data.json = JSON.stringify("select adm0_code from spatial.spatial.gaul0_3857 limit 1");
+//
+//    $.ajax({
+//        type : 'POST',
+//        url : 'http://faostat3.fao.org/wds/rest/table/json',
+//        data : data,
+//
+//        success : function(response) {
+//
+//        },
+//        error : function(err, b, c) {}
+//    });
 
 
 </script>

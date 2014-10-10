@@ -17,28 +17,23 @@
 
 
 <script>
-//    var crs = new L.Proj.CRS('EPSG:54009',
-//            '+proj=moll +lon_0=0 +x_0=0 +y_0=0 +ellps=WGS84 +datum=WGS84 +units=m no_defs',
-//            {
-//                resolutions: [
-//                    18040112, 9040112, 4540112, 819, 409, 204
-//                ]
-//            },
-//            {
-//                origin: [ -18040095.696147296577692,9020047.848073646426201]
-//            }
-//    );
 
-    var crs = new L.Proj.CRS('EPSG:54009',
-            '+proj=moll +lon_0=0 +x_0=0 +y_0=0 +ellps=WGS84 +datum=WGS84 +units=m no_defs', {
-        resolutions: [267000493, 133500247,66750124,33375062]
+//    var crs = new L.Proj.CRS('EPSG:54009',
+//            '+proj=moll +lon_0=0 +x_0=0 +y_0=0 +ellps=WGS84 +datum=WGS84 +units=m no_defs', {
+//                "resolutions": [65500, 32000, 16000]
+//    });
+
+    var scales = [500, 1000, 2000, 4000, 10000, 25000, 50000];
+    var resolutions = [];
+    var crs = new L.Proj.CRS('EPSG:54009', '+proj=moll +lon_0=0 +x_0=0 +y_0=0 +units=m +no_defs', {
+        resolutions: [1.40625,0.703125,0.3515625,0.17578125,0.087890625,0.0439453125]
     });
 
     console.log(crs);
 
     var map = new L.Map('map', {
         crs: crs,
-        continuousWorld: false,
+        continuousWorld: true,
         worldCopyJump: false
     });
     console.log(map);
@@ -50,7 +45,7 @@
         transparent: true
     }).addTo(map);
 
-    map.setView([0, 0], 1);
+    map.setView([0, 0], 0);
 
 </script>
 </body>

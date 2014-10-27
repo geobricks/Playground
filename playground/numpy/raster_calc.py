@@ -4,7 +4,6 @@ import sys
 from pgeo.utils.filesystem import create_tmp_filename
 
 
-
 def get_ds(file_path, open_type=GA_ReadOnly):
     # open the image
     return gdal.Open(file_path, open_type)
@@ -74,6 +73,24 @@ def apply_formula_sum(band1, band2, rows, cols, type=GDT_Float32, formula=None):
 
             data = data1 + data2
             output_raster.GetRasterBand(1).WriteArray(data,j,i)
+
+
+    return output_raster
+
+
+def get_scatter(band1, band2, rows, cols, type=GDT_Float32, formula=None):
+    array = []
+
+    xBlockSize, yBlockSize = get_blocksize(band1)
+    for i in range(0, rows, yBlockSize):
+        sys.stdout.write(".")
+        numRows = update_numRowsCols(i, rows, yBlockSize)
+        for j in range(0, cols, xBlockSize):
+            numCols = update_numRowsCols(j, cols, xBlockSize)
+            data1 = get_block_data(band1, j, i, numCols, numRows)
+            data2 = get_block_data(band2, j, i, numCols, numRows)
+
+
 
 
     return output_raster

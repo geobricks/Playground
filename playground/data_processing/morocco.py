@@ -83,6 +83,8 @@ def processing_data():
 
 def create_metadata(name, sldname, date, area):
 
+    # TODO: important this is a new workspace
+    workspace = "morocco"
 
     creationDate = calendar.timegm(datetime.datetime.now().timetuple())
 
@@ -98,6 +100,8 @@ def create_metadata(name, sldname, date, area):
 
     # Sample of Metadata json
     metadata_def = {}
+    metadata_def["meSpatialRepresentation"]["workspace"] = workspace
+
     metadata_def["title"] = {}
     metadata_def["title"]["EN"] = title
     metadata_def["creationDate"] = creationDate
@@ -122,6 +126,8 @@ def create_metadata(name, sldname, date, area):
     metadata_def["meSpatialRepresentation"]["seDefaultStyle"] = {}
     metadata_def["meSpatialRepresentation"]["seDefaultStyle"]["name"] = "morocco_" + sldname
 
+
+
     return metadata_def
 
 def get_range_dates_metadata(month, year):
@@ -136,8 +142,43 @@ def publish_data(input_folder):
         info = str.split(get_filename(input_file), "_")
         #print "name %s, sld %s, date %s, area %s" % (info[0], info[1], info[2], info[3])
         if "irrigated" not in info[0]:
-            metadata_def = create_metadata(info[0], info[1], info[2], info[3])
+            pass
+            # metadata_def = create_metadata(info[0], info[1], info[2], info[3])
+            # manager.publish_coverage(input_file, metadata_def)
+        else:
+            name = info[0] + " " + info[1] + " " + info[2]
+            sldname = info[0] + "_" + info[1] + "_"  +info[2]
+            metadata_def = create_metadata(name, sldname, "201410", info[3])
+            manager.publish_coverage(input_file, metadata_def)
+
+
+def publish_data_wheat(input_folder):
+    input_files = glob.glob(input_folder +"/*.tif")
+    for input_file in input_files:
+        info = str.split(get_filename(input_file), "_")
+        #print "name %s, sld %s, date %s, area %s" % (info[0], info[1], info[2], info[3])
+        if "water_productivity" in input_file:
+            name = info[0] + " " + info[1] + " " + info[2]
+            sldname = info[1] + "_" + info[2]
+            metadata_def = create_metadata(name, sldname, "201410", info[3])
+            manager.publish_coverage(input_file, metadata_def)
+        if "yieldgap" in input_file:
+            name = info[0] + " " + info[1]
+            sldname = info[1]
+            metadata_def = create_metadata(name, sldname, "201410", info[3])
+            manager.publish_coverage(input_file, metadata_def)
+        if "yield" in input_file:
+            name = info[0] + " " + info[1] + " " + info[2]
+            sldname = info[2]
+            metadata_def = create_metadata(name, sldname, "201410", info[3])
+            manager.publish_coverage(input_file, metadata_def)
+        if "seasonal" in input_file:
+            name = info[0] + " " + info[1] + " " + info[2] + " " + info[3]
+            sldname = info[3]
+            metadata_def = create_metadata(name, sldname, "201410", info[4])
             manager.publish_coverage(input_file, metadata_def)
 
 #processing_data()
-#publish_data("/home/vortex/Desktop/LAYERS/MOROCCO/Morocco/output_3857")
+publish_data("/home/vortex/Desktop/LAYERS/MOROCCO/Morocco/output_3857")
+
+#publish_data_wheat("/home/vortex/Desktop/LAYERS/MOROCCO/Morocco/output_3857/wheat")

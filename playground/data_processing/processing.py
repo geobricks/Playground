@@ -1,5 +1,5 @@
 import subprocess
-from  pgeo.utils import filesystem
+from pgeo.utils import filesystem
 from pgeo.gis.raster import get_nodata_value
 
 # default options

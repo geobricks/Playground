@@ -125,9 +125,6 @@ def create_metadata(name, sldname, date, area):
     metadata_def["meSpatialRepresentation"] = {}
     metadata_def["meSpatialRepresentation"]["seDefaultStyle"] = {}
     metadata_def["meSpatialRepresentation"]["seDefaultStyle"]["name"] = "morocco_" + sldname
-
-
-
     return metadata_def
 
 def get_range_dates_metadata(month, year):

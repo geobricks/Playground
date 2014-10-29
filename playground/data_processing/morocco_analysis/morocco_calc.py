@@ -25,8 +25,8 @@ def process(input_folder, output_folder, mask_file):
         pass
 
 
-input_folder = "/home/vortex/Desktop/LAYERS/MOROCCO_MICHELA/output/Monthly_Results_Doukkala_30m/"
-output_folder = "/home/vortex/Desktop/LAYERS/MOROCCO_MICHELA/output/Monthly_Results_Doukkala_30m/masked"
-mask_file = "/home/vortex/Desktop/LAYERS/MOROCCO_MICHELA/output/Crop_SeasonalResults_Doukkala_30m/Wheat/wheat_seasonal_act_biomprod_doukkala_mask.tif"
+input_folder = "/home/vortex/Desktop/LAYERS/MOROCCO_MICHELA/original_unsorted/output/Monthly_Results_Doukkala_30m/"
+output_folder = input_folder + "masked"
+mask_file = "/home/vortex/Desktop/LAYERS/MOROCCO_MICHELA/original_unsorted/wheat_mask.tif"
 
 process(input_folder, output_folder, mask_file)

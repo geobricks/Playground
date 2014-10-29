@@ -46,12 +46,29 @@ def process(input_folder, output_folder, process_layer_parameters):
         print e
         pass
 
+
+def process_file(input_file, output_folder, process_layer_parameters):
+
+    try:
+        output_filename = output_folder + "/" + get_filename(input_file) + ".tif"
+        print(output_filename)
+
+        # create a geotiff + overviews
+        process_layers(input_file, output_filename, process_layer_parameters)
+
+    except Exception, e:
+        print e
+        pass
+
 input_base_path = "/home/vortex/Desktop/LAYERS/MOROCCO_MICHELA/to_publish/original/"
 output_base_path = "/home/vortex/Desktop/LAYERS/MOROCCO_MICHELA/to_publish/3857/"
 
-path = "wheat_seasonal"
+path = "wheat_seasonal/"
 
 input_folder = input_base_path + path
 output_folder = output_base_path + path
 
 process(input_folder, output_folder, process_layer_parameters_3857)
+
+
+#process_file("/home/vortex/Desktop/LAYERS/MOROCCO_MICHELA/to_publish/original/wheat_mask.tif", "/home/vortex/Desktop/LAYERS/MOROCCO_MICHELA/to_publish/3857/", process_layer_parameters_3857)

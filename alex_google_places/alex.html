@@ -17,8 +17,13 @@
 
     var total = []
 
-    var start = [39.49028, -0.40495]
-    var end   = [39.42944, -0.33302]
+    // old values
+    //var start = [39.49028, -0.40495]
+    //var end   = [39.42944, -0.33302]
+
+
+    var start = [39.566112, -0.432538]
+    var end   = [ 39.279061, -0.273746]
 
     var pyrmont = new google.maps.LatLng(start[0],start[1]);
 
@@ -54,36 +59,39 @@
        'cafe'
    ]
 
-    var timeout
+    var timeout = 2000;
+    // old step 1km?
+    //var step = 0.008983
+    var step = 0.001
+    var radius = '100';
 
-    //var types = ['restaurant']
+    var types = ['restaurant']
 
     // problem there could be more than 20 i.e. restaurant in a 1km,
     // so maybe there should be a more defined query, something like 500m
     var total_requests = 0;
     var index_request = 0;
-    for ( var x = end[0]; x <= start[0]; x += 0.008983) {
-        for ( var y = start[1]; y <= end[1]; y += 0.008983) {
+    for ( var x = end[0]; x <= start[0]; x += step) {
+        for ( var y = start[1]; y <= end[1]; y += step) {
             for (var k = 0; k < types.length; k++) {
                 var type = types[k]
                 var x = x;
                 var y = y;
                 index_request++;
-                console.log(x + " , " + y + " , " + types[k] );
+                //console.log(x + " , " + y + " , " + types[k] );
 //
                 setTimeout(function(x, y, type){
                     var p = new google.maps.LatLng(x, y);
-
                     var request = {
                         location: p,
-                        radius: '1000',
+                        radius: radius,
                         types: [type]
                     };
+                    //console.log(request);
                     service = new google.maps.places.PlacesService(map);
                     service.nearbySearch(request, callback);
 
-                 },2000*(index_request), x, y, type);
-
+                 },timeout*(index_request), x, y, type);
             }
         }
     }

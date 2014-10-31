@@ -28,7 +28,7 @@ def process(input_folder, output_folder):
         pass
 
 
-input_folder = "/home/vortex/Desktop/LAYERS/MOROCCO_MICHELA/to_publish/3857/wheat_seasonal/"
+input_folder = "/home/vortex/Desktop/LAYERS/MOROCCO_MICHELA/to_publish/3857/wheat_timeseries/ETRef/output/"
 output_folder = input_folder + "clipped"
 
 process(input_folder, output_folder)

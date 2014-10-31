@@ -40,6 +40,7 @@ def process_layers(input_path, output_file, parameters=process_layer_parameters)
     process = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
     output, error = process.communicate()
     print output
+    print error
 
 
     # gdal_translate_layer = filesystem.create_tmp_filename()
@@ -60,6 +61,7 @@ def process_layers(input_path, output_file, parameters=process_layer_parameters)
     process = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
     output, error = process.communicate()
     print output
+    print error
 
 
     # cmd = "gdal_translate -a_nodata 9e+20 " + gdal_translate_layer + " " + output_file

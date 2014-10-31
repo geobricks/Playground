@@ -20,13 +20,15 @@ def process(input_folder, output_folder, mask_file):
             cmd = 'gdal_calc.py -A ' + input_file + ' -B ' + mask_file + ' --outfile=' + output_filename + ' --calc="B*A" --NoDataValue=-3000'
             process = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
             output, error = process.communicate()
+            print output
+            print error
 
     except Exception, e:
         print e
         pass
 
 
-input_folder = "/home/vortex/Desktop/LAYERS/MOROCCO_MICHELA/to_publish/3857/meteo/precipitation/"
+input_folder = "/home/vortex/Desktop/LAYERS/MOROCCO_MICHELA/to_publish/3857/wheat_timeseries/ETRef/output/clipped/"
 output_folder = input_folder + "masked"
 mask_file = "/home/vortex/Desktop/LAYERS/MOROCCO_MICHELA/to_publish/3857/meteo/ndvi/ndvi_mask.tif"
 

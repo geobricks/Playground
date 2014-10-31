@@ -8,18 +8,19 @@ from playground.data_processing.processing import process_layers
 
 process_layer_parameters_3857 = {
     "gdalwarp" : {
-        "-overwrite" : "",
-        "-multi" : "",
-        "-of" : "GTiff",
-        "-s_srs" :"EPSG:32629",
+        "-overwrite": "",
+        "-multi": "",
+        "-of": "GTiff",
+        "-s_srs": "'+proj=aea +lat_1=40 +lat_2=-5 +lat_0=15 +lon_0=15 +x_0=2000000 +y_0=2000000 +ellps=WGS84 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs'",
         "-t_srs": "EPSG:3857",
-        "-srcnodata" : "0",
-        "-dstnodata" : "0"
+        "-tr": "35.6787 -35.6787",
+        "-srcnodata": "0",
+        "-dstnodata": "0"
     },
-    "gdaladdo" : {
-        "parameters" : {
+    "gdaladdo": {
+        "parameters": {
         },
-        "overviews_levels" : "2 4 8 16"
+        "overviews_levels": "2 4 8 16"
     }
 }
 
@@ -60,10 +61,10 @@ def process_file(input_file, output_folder, process_layer_parameters):
         print e
         pass
 
-input_base_path = "/home/vortex/Desktop/LAYERS/MOROCCO_MICHELA/to_publish/original/"
-output_base_path = "/home/vortex/Desktop/LAYERS/MOROCCO_MICHELA/to_publish/3857/"
+input_base_path = "/home/vortex/Desktop/LAYERS/MOROCCO_MICHELA/to_publish/3857/wheat_timeseries/ETRef"
+output_base_path = "/home/vortex/Desktop/LAYERS/MOROCCO_MICHELA/to_publish/3857/wheat_timeseries/ETRef/output"
 
-path = "wheat_seasonal/"
+path = "/"
 
 input_folder = input_base_path + path
 output_folder = output_base_path + path

@@ -87,7 +87,7 @@ def publish_data_timeseries(input_folder):
         date = info[1]
         metadata_def = create_metadata(title, product, sldname, date,  get_measurement_unit(title))
         print metadata_def
-        manager.publish_coverage(input_file, metadata_def)
+        #manager.publish_coverage(input_file, metadata_def)
 
 
 # used with: temperature
@@ -131,8 +131,8 @@ def publish_data_meteo_evapotranspiration(input_folder):
 def publish_data_wheat_seasonal(input_folder):
     input_files = glob.glob(input_folder +"/*.tif")
     for input_file in input_files:
+        info = str.split(get_filename(input_file), "_")
         if "wheat_productivity" not in input_file and "yieldgap" not in input_file:
-            info = str.split(get_filename(input_file), "_")
             #print "name %s, sld %s, date %s, area %s" % (info[0], info[1], info[2], info[3])
             #title = info[4].capitalize() + " - " + info[0] + " " + info[1] + " " + info[2] + " - " + info[3]
             # title = info[4].capitalize() + " - " + info[0] + " " + info[1] + " " + info[2] + " - " + info[3]
@@ -144,7 +144,6 @@ def publish_data_wheat_seasonal(input_folder):
             #print metadata_def
             #manager.publish_coverage(input_file, metadata_def)
         if "water" in input_file:
-            info = str.split(get_filename(input_file), "_")
             title =  info[2] + " " + info[3]
             sldname = "morocco_" + info[2] + "_" + info[3]
             date = "201401" # FAKE DATE!!!
@@ -152,15 +151,33 @@ def publish_data_wheat_seasonal(input_folder):
             metadata_def = create_metadata(title, product, sldname, date, get_measurement_unit(title))
             #print metadata_def
         if "yieldgap" in input_file:
-            info = str.split(get_filename(input_file), "_")
             title = info[2]
             sldname = "morocco_" + info[2]
             date = "201401" # FAKE DATE!!!
             product = info[3].capitalize() + " - " + info[0] + " " + info[1]
             metadata_def = create_metadata(title, product, sldname, date, get_measurement_unit(title))
-
         # publishing
         #manager.publish_coverage(input_file, metadata_def)
+
+def publish_data_wheat_seasonal_irrigated(input_folder):
+    input_files = glob.glob(input_folder +"/*.tif")
+    for input_file in input_files:
+        info = str.split(get_filename(input_file), "_")
+        product = "Doukkala - wheat seasonal"
+        sldname = "morocco_"
+        date = "201401" # FAKE DATE!!!
+        if "water" in input_file:
+            title = info[0] + " " + info[2] + " " + info[3]
+            sldname += "water_productivity"
+        if "yieldgap" in input_file:
+            title = info[0] + " " + info[2]
+            sldname += "yieldgap"
+        if "yield" in input_file:
+            title = info[0] + " " + info[2] + " " + info[3]
+            sldname += "yield"
+        metadata_def = create_metadata(title, product, sldname, date, get_measurement_unit(title))
+        print metadata_def
+        manager.publish_coverage(input_file, metadata_def)
 
 
 def get_measurement_unit(name):
@@ -183,7 +200,7 @@ def get_measurement_unit(name):
     return ""
 
 #publish_data_timeseries("/home/vortex/Desktop/LAYERS/MOROCCO_MICHELA/to_publish/3857/meteo/ndvi/")
-publish_data_timeseries("/home/vortex/Desktop/LAYERS/MOROCCO_MICHELA/to_publish/3857/meteo/precipitation/")
+#publish_data_timeseries("/home/vortex/Desktop/LAYERS/MOROCCO_MICHELA/to_publish/3857/meteo/precipitation/")
 
 # evapotranspiration
 #publish_data_meteo_evapotranspiration("/home/vortex/Desktop/LAYERS/MOROCCO_MICHELA/to_publish/3857/meteo/evapotranspiration/actual/")
@@ -191,5 +208,6 @@ publish_data_timeseries("/home/vortex/Desktop/LAYERS/MOROCCO_MICHELA/to_publish/
 #publish_data_meteo_evapotranspiration("/home/vortex/Desktop/LAYERS/MOROCCO_MICHELA/to_publish/3857/meteo/evapotranspiration/ETRef/")
 
 
-
+# Seasonal
 #publish_data_wheat_seasonal("/home/vortex/Desktop/LAYERS/MOROCCO_MICHELA/to_publish/3857/wheat_seasonal/")
+publish_data_wheat_seasonal_irrigated("/home/vortex/Desktop/LAYERS/MOROCCO_MICHELA/to_publish/3857/irrigated/")

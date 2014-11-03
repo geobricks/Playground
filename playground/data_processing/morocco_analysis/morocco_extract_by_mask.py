@@ -28,8 +28,8 @@ def process(input_folder, output_folder, mask_file):
         pass
 
 
-input_folder = "/home/vortex/Desktop/LAYERS/MOROCCO_MICHELA/to_publish/3857/wheat_timeseries/ETRef/output/clipped/"
+input_folder = "/home/vortex/Desktop/LAYERS/MOROCCO_MICHELA/to_publish/3857/meteo/evapotranspiration/ETRef/clipped/"
 output_folder = input_folder + "masked"
-mask_file = "/home/vortex/Desktop/LAYERS/MOROCCO_MICHELA/to_publish/3857/meteo/ndvi/ndvi_mask.tif"
+mask_file = "/home/vortex/Desktop/LAYERS/MOROCCO_MICHELA/to_publish/3857/meteo/ndvi/ndvi_mask.geotiff"
 
 process(input_folder, output_folder, mask_file)

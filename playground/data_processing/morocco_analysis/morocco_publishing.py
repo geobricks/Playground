@@ -156,8 +156,16 @@ def publish_data_wheat_seasonal(input_folder):
             date = "201401" # FAKE DATE!!!
             product = info[3].capitalize() + " - " + info[0] + " " + info[1]
             metadata_def = create_metadata(title, product, sldname, date, get_measurement_unit(title))
+        if "evapotransipiration" in input_file:
+            title = info[2] + " - " + info[3]
+            sldname = "morocco_evapotransipiration_wheat"
+            date = "201401" # FAKE DATE!!!
+            product = info[4].capitalize() + " - " + info[0] + " " + info[1]
+            metadata_def = create_metadata(title, product, sldname, date, get_measurement_unit(title))
         # publishing
+        print metadata_def
         #manager.publish_coverage(input_file, metadata_def)
+
 
 def publish_data_wheat_seasonal_irrigated(input_folder):
     input_files = glob.glob(input_folder +"/*.tif")
@@ -177,7 +185,20 @@ def publish_data_wheat_seasonal_irrigated(input_folder):
             sldname += "yield"
         metadata_def = create_metadata(title, product, sldname, date, get_measurement_unit(title))
         print metadata_def
-        manager.publish_coverage(input_file, metadata_def)
+        #manager.publish_coverage(input_file, metadata_def)
+
+
+def publish_data_winter_crop_classification(input_folder):
+    input_files = glob.glob(input_folder +"/*.tif")
+    for input_file in input_files:
+        info = str.split(get_filename(input_file), "_")
+        product = "Doukkala - wheat seasonal"
+        title = "Winter Crop Classification"
+        sldname = "morocco_winter_crop_classification"
+        date = "201401" # FAKE DATE!!!
+        metadata_def = create_metadata(title, product, sldname, date, get_measurement_unit(title))
+        print metadata_def
+        #manager.publish_coverage(input_file, metadata_def)
 
 
 def get_measurement_unit(name):
@@ -193,6 +214,12 @@ def get_measurement_unit(name):
        return "mm"
     if "precipitation" in name.lower():
         return "mm"
+    if "actualet" in name.lower():
+       return "mm"
+    if "potentialet" in name.lower():
+        return "mm"
+    if "evapotransipiration" in name.lower():
+        return "mm"
     if "ndvi" in name.lower():
         return ""
     if "water" in name.lower():
@@ -207,7 +234,11 @@ def get_measurement_unit(name):
 #publish_data_meteo_evapotranspiration("/home/vortex/Desktop/LAYERS/MOROCCO_MICHELA/to_publish/3857/meteo/evapotranspiration/potential/")
 #publish_data_meteo_evapotranspiration("/home/vortex/Desktop/LAYERS/MOROCCO_MICHELA/to_publish/3857/meteo/evapotranspiration/ETRef/")
 
-
 # Seasonal
 #publish_data_wheat_seasonal("/home/vortex/Desktop/LAYERS/MOROCCO_MICHELA/to_publish/3857/wheat_seasonal/")
-publish_data_wheat_seasonal_irrigated("/home/vortex/Desktop/LAYERS/MOROCCO_MICHELA/to_publish/3857/irrigated/")
+#publish_data_wheat_seasonal_irrigated("/home/vortex/Desktop/LAYERS/MOROCCO_MICHELA/to_publish/3857/irrigated/")
+publish_data_wheat_seasonal("/home/vortex/Desktop/LAYERS/MOROCCO_MICHELA/to_publish/3857/wheat_seasonal/evapotranspiration/")
+
+# winter_crop_classification
+#publish_data_winter_crop_classification("/home/vortex/Desktop/LAYERS/MOROCCO_MICHELA/alex/")
+

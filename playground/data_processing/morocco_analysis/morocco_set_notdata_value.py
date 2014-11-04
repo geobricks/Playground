@@ -16,7 +16,7 @@ def process(input_folder, output_folder):
         for input_file in input_files:
             output_filename = output_folder + "/" + get_filename(input_file) + ".tif"
             #gdal_calc.py -A wheat_seasonal_act_biomprod_doukkala_mask.tif -B asd --outfile=processed.tif --calc="B*A" --NoDataValue=0
-            cmd = 'gdal_translate -te -1010580.0921138877747580 3810893.3240307914093137 -894408.7707638647407293 3894810.6912959185428917 ' + input_file + ' ' + output_filename
+            cmd = 'gdalwarp -te -1010580.0921138877747580 3810893.3240307914093137 -894408.7707638647407293 3894810.6912959185428917 ' + input_file + ' ' + output_filename
             print cmd
             process = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
             output, error = process.communicate()

@@ -28,7 +28,7 @@ def process(input_folder, output_folder, mask_file):
         pass
 
 
-input_folder = "/home/vortex/Desktop/LAYERS/MOROCCO_MICHELA/to_publish/3857/meteo/evapotranspiration/ETRef/clipped/"
+input_folder = "/home/vortex/Desktop/LAYERS/MOROCCO_MICHELA/to_publish/3857/wheat_seasonal/evapotranspiration/proj/clipped/"
 output_folder = input_folder + "masked"
 mask_file = "/home/vortex/Desktop/LAYERS/MOROCCO_MICHELA/to_publish/3857/meteo/ndvi/ndvi_mask.geotiff"
 

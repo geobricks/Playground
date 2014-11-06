@@ -76,17 +76,19 @@ def get_range_dates_metadata(month, year):
 def publish_data_GriddedLivestock(input_folder):
     input_files = glob.glob(input_folder +"/*.tif")
 
-    product = "Livestock"
+    product = "GHG - Livestock"
+
+    sldname = "ghg_"
 
     for input_file in input_files:
         info = str.split(get_filename(input_file), "_")
 
-        title = info[0].capitalize()
-        product = info[2].capitalize() + " - " + info[0].upper()
-        sldname = "none"
-        date = info[1]
+        title = info[0].capitalize() + " " + info[1] + " - " + info[2]
+        sldname += get_filename(input_file).lower()
+        date = info[2] + "01"
         metadata_def = create_metadata(title, product, sldname, date, None)
-        #manager.publish_coverage(input_file, metadata_def)
+        print metadata_def
+        manager.publish_coverage(input_file, metadata_def)
 
 
-publish_data_GriddedLivestock("/home/vortex/Desktop/LAYERS/GHG_13_NOVEMEBRE/GriddedLivestock/to_publish/")
+publish_data_GriddedLivestock("/home/vortex/Desktop/LAYERS/GHG_13_NOVEMEBRE/GriddedLivestock/to_publish_3857/")

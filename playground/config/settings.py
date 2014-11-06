@@ -63,7 +63,7 @@ settings = {
     # Databases
     "db": {
         "metadata": {
-            "connection": "mongodb://localhost:27017/",
+            "connection": "mongodb://168.202.39.41:27017/",
             "database": "metadata",
             "document": {
                 "layer": "layer"
@@ -93,10 +93,10 @@ settings = {
 
     # Geoserver
     "geoserver": {
-        "geoserver_master": "http://localhost:9090/geoserver/rest",
+        "geoserver_master": "http://168.202.39.41:20100/geoserver/rest",
         "geoserver_slaves": [],
-        "username": "admin",
-        "password": "geoserver",
+        "username": "fenix",
+        "password": "Fenix2014",
         "default_workspace": "fenix",
         # this is used as default datasource to this is a reference to the spatial_db
         # da vedere!

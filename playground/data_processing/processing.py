@@ -26,49 +26,15 @@ process_layer_parameters = {
 
 def process_layers(input_path, output_file, parameters=process_layer_parameters):
 
-    no_data_value = get_nodata_value(input_path)
-    print "NO DATA VALUE %s" % no_data_value
-    # parameters["gdalwarp"]["-srcnodata"]  = no_data_value
-    # parameters["gdalwarp"]["-dstnodata"]  = 0
 
-    gdal_warp_layer = filesystem.create_tmp_filename()
-    cmd = "gdalwarp "
-    for key in parameters["gdalwarp"].keys():
-        cmd += " " + key + " " + str(parameters["gdalwarp"][key])
-    cmd += " " + input_path + " " + output_file
+    gdal_translate_layer = filesystem.create_tmp_filename()
+    cmd = "gdal_translate " + input_path + " " + output_file
     print cmd
     process = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
     output, error = process.communicate()
     print output
-    print error
 
 
-    # gdal_translate_layer = filesystem.create_tmp_filename()
-    # cmd = "gdal_translate -a_nodata none " + gdal_warp_layer + " " + gdal_translate_layer
-    # print cmd
-    # process = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
-    # output, error = process.communicate()
-    # print output
-
-
-    cmd = "gdaladdo "
-    for key in parameters["gdaladdo"]["parameters"].keys():
-        cmd += " " + key + " " + str(parameters["gdaladdo"]["parameters"][key])
-    # cmd += " " + gdal_translate_layer
-    cmd += " " + output_file
-    cmd += " " + parameters["gdaladdo"]["overviews_levels"]
-    print cmd
-    process = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
-    output, error = process.communicate()
-    print output
-    print error
-
-
-    # cmd = "gdal_translate -a_nodata 9e+20 " + gdal_translate_layer + " " + output_file
-    # print cmd
-    # process = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
-    # output, error = process.communicate()
-    # print output
 
 
 

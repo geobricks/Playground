@@ -93,7 +93,7 @@ settings = {
 
     # Geoserver
     "geoserver": {
-        "geoserver_master": "http://168.202.39.41:20100/geoserver/rest",
+        "geoserver_master": "http://168.202.39.41:20200/geoserver/rest",
         "geoserver_slaves": [],
         "username": "fenix",
         "password": "Fenix2014",

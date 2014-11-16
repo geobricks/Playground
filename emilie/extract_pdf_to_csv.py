@@ -16,23 +16,35 @@ report_file = "/home/vortex/Desktop/emilie/report.csv"
 
 dictionary = {
     "en": {
+        "ware": 0.3,
         "stock": 1.0,
+        "supply": 0.1,
+        "provide": 0.1,
+        "furnish": 0.1,
+        "render": 0.1,
+        "store": 0.3,
         "storage": 1.0,
         "cereal stock": 1.0,
         "left over": "1.0",
         "infrastructure": 0.1,
         "cereal": 0.1,
         "grain": 0.1,
+        "granary": 1.0,
+        "granaries": 1.0,
         "facilities": 0.5,
         "capacity": 0.5,
-        "facility": 0.5
+        "facility": 0.5,
     },
     "fr": [],
     "es": []
 }
 
 black_list = {
-    "livestock"
+    "livestock",
+    "awareness", "aware", "software", "topfware", "waren", "microware", "hardware",
+    "ubostwarelative", "rekenaarsagteware", "sagteware", "towards", "forward", "edward", "award",
+    "kawar", "onwards", "warning", "twardej", "towarowy", "wytwarzania", "warunkom",
+    "pastor", "providencia"
 }
 
 
@@ -59,7 +71,7 @@ def check_dictionary(words, file_path, csvwriter):
                         break;
 
                 if check_black_list:
-                    print d, w, " add to report"
+                    print d + " | " + w
                     word_weight = dictionary["en"][d]
                     try:
                         csvwriter.writerow([words[index-1] + " " + w + " " + words[index+1], d, word_weight])
@@ -97,26 +109,27 @@ def main_all(path):
     for root, dirs, files in os.walk(path):
         for name in files:
             if name.endswith(".text"):
-                counter_all = counter_all+1
-                filepath = os.path.join(root, name)
-                path, filename, name = get_filename(filepath, True)
-                report_csv = os.path.join(path, name + ".csv")
-                if os.path.isfile(report_csv + "_NOTHING_FOUND") is True:
-                    os.remove(report_csv + "_NOTHING_FOUND")
+                if "poland" in root.lower():
+                    counter_all = counter_all+1
+                    filepath = os.path.join(root, name)
+                    path, filename, name = get_filename(filepath, True)
+                    report_csv = os.path.join(path, name + ".csv")
+                    if os.path.isfile(report_csv + "_NOTHING_FOUND") is True:
+                        os.remove(report_csv + "_NOTHING_FOUND")
 
 
-                with open(report_csv, 'wb') as csvfile:
-                    #if os.path.getsize(report_csv) is 0:
-                    print filepath
-                    csvwriter = csv.writer(csvfile, delimiter=',',quotechar='"', quoting=csv.QUOTE_MINIMAL)
-                    #if os.path.getsize(report_csv) is 0:
-                    result = scrap_text_file(filepath, csvwriter)
-                    if result is False:
-                        print "FALSE: ", report_csv
-                        os.rename(report_csv, report_csv+ "_NOTHING_FOUND")
-                    else:
-                        counter_true = counter_true+1
-                        print "TRUE: ", report_csv
+                    with open(report_csv, 'wb') as csvfile:
+                        #if os.path.getsize(report_csv) is 0:
+                        #print filepath
+                        csvwriter = csv.writer(csvfile, delimiter=',',quotechar='"', quoting=csv.QUOTE_MINIMAL)
+                        #if os.path.getsize(report_csv) is 0:
+                        result = scrap_text_file(filepath, csvwriter)
+                        if result is False:
+                            #print "FALSE: ", report_csv
+                            os.rename(report_csv, report_csv+ "_NOTHING_FOUND")
+                        else:
+                            counter_true = counter_true+1
+                            print "TRUE: ", report_csv
 
     print str(counter_true) + "/" + str(counter_all)
 

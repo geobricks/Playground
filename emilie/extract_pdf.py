@@ -51,7 +51,6 @@ def scrap_pdf(path, csvwriter, text_file, do_csv=False):
     text_file.write(text)
 
     # check the words in the text
-    print "check dictionary"
     result = False
     if do_csv is True:
         result = check_dictionary(text.split(), path, csvwriter)
@@ -136,12 +135,13 @@ def main_all():
                 print "File error parsed found"
 
 def convert_pdfs(path):
-    # path = "/home/vortex/Desktop/emilie/Africa/"
+    path = "/home/vortex/Desktop/emilie/Europe/Lithuania_2010/3.Questionnaires/"
     # path = "/home/vortex/Desktop/emilie/"
 
     for root, dirs, files in os.walk(path):
         for name in files:
-            if name.endswith(".pdf"):
+            #if name.endswith(".pdf") or name.endswith(".PDF"):
+            if name.endswith(".PDF"):
                 filepath = os.path.join(root, name)
                 path, filename, name = get_filename(filepath, True)
                 pdf_to_text = os.path.join(path, name + ".text")

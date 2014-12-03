@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places"></script>
+
+</head>
+<body>
+
+<div id="map"></div>
+</body>
+</html>
+
+<script>
+
+    var total = []
+
+    // old values
+    var start = [39.49028, -0.40495]
+    var end   = [39.42944, -0.33302]
+
+
+//    var start = [39.566112, -0.432538]
+//    var end   = [ 39.279061, -0.273746]
+
+    var pyrmont = new google.maps.LatLng(start[0],start[1]);
+
+        map = new google.maps.Map(document.getElementById('map'), {
+            center: pyrmont,
+            zoom: 15
+        });
+
+    https://maps.googleapis.com/maps/api/js/QuotaService.RecordEvent?1shttp%3A%2F%2Flocalhost%3A63343%2FFENIX-P-GEO%2Fplayground%2Falex_google_places%2Falex.html&4e1&5e0&6u1&7shkqvz4&callback=_xdc_._f1ctjv&token=38672
+
+   var types = [
+       'hair_care'
+//       'restaurant',
+//       'liquor_store',
+//       'library',
+//       'store',
+//       'shoe_store',
+//       'pharmacy',
+//       'bank',
+//       'food',
+//       'health',
+//       'jewelry_store' ,
+//       'insurance_agency',
+//       'pet_store',
+//       'physiotherapist',
+//       'laundry',
+//       'lawyer',
+//       'meal_delivery',
+//       'veterinary_care',
+//       'travel_agency',
+//       'taxi_stand',
+//       'home_goods_store',
+//       'grocery_or_supermarket',
+//       'bakery',
+//       'cafe'
+   ]
+
+    var timeout = 2000;
+    // old step 1km?
+    //var step = 0.008983
+    var step = 0.001
+    var radius = '100';
+
+    var types = ['restaurant']
+
+    // problem there could be more than 20 i.e. restaurant in a 1km,
+    // so maybe there should be a more defined query, something like 500m
+    var total_requests = 0;
+    var index_request = 0;
+    for ( var x = end[0]; x <= start[0]; x += step) {
+        for ( var y = start[1]; y <= end[1]; y += step) {
+            for (var k = 0; k < types.length; k++) {
+                var type = types[k]
+                var x = x;
+                var y = y;
+                index_request++;
+                //console.log(x + " , " + y + " , " + types[k] );
+//
+                setTimeout(function(x, y, type){
+                    var p = new google.maps.LatLng(x, y);
+                    var request = {
+                        location: p,
+                        radius: radius,
+                        types: [type]
+                    };
+                    //console.log(request);
+                    service = new google.maps.places.PlacesService(map);
+                    service.nearbySearch(request, callback);
+
+                 },timeout*(index_request), x, y, type);
+            }
+        }
+    }
+
+    function callback(results, status) {
+        total_requests++;
+
+        console.log(total_requests + " of " + index_request);
+
+        if (status == google.maps.places.PlacesServiceStatus.OK) {
+            for (var i = 0; i < results.length; i++) {
+                var place = results[i];
+                //console.log(place);
+                total.push(place)
+            }
+//            console.log("-------------");
+//            console.log(results);
+        }
+        else{
+            console.log(results);
+            console.log(status);
+        }
+
+
+        var finalVal = ""
+        if ( total_requests >= index_request) {
+            var finalVal =''
+            var content = []
+            console.log("-------------");
+            console.log(total.length);
+            for(var i=0; i < total.length; i++) {
+                var c = []
+                var types = ""
+                for (var j=0; j <  total[i].types.length; j++) {
+                    types += total[i].types[j] + ","
+                }
+                types = types.slice(0,-1)
+
+                var lat =  total[i].geometry.location.lat()
+                var lng =  total[i].geometry.location.lng()
+
+                var innerValue = total[i].name;
+                    var result = innerValue.replace(/"/g, '""');
+                    if (result.search(/("|,|\n)/g) >= 0)
+                        result = '"' + result + '"';
+                    if (j > 0)
+                        finalVal += ',';
+                    finalVal += result;
+
+
+                var innerValue = types;
+                var result = innerValue.replace(/"/g, '""');
+                if (result.search(/("|,|\n)/g) >= 0)
+                    result = '"' + result + '"';
+                if (j > 0)
+                    finalVal += ',';
+                finalVal += result;
+
+                var innerValue = lat.toString();
+                var result = innerValue.replace(/"/g, '""');
+                if (result.search(/("|,|\n)/g) >= 0)
+                    result = '"' + result + '"';
+                if (j > 0)
+                    finalVal += ',';
+                finalVal += result;
+
+                var innerValue = lng.toString();
+                var result = innerValue.replace(/"/g, '""');
+                if (result.search(/("|,|\n)/g) >= 0)
+                    result = '"' + result + '"';
+                if (j > 0)
+                    finalVal += ',';
+                finalVal += result;
+
+                finalVal += '\n';
+
+//                str += total[i].name + '"','"' + types + '"','"' + lat + '"','"' + lng + '"'
+//                str += '\n';
+//                console.log(total[i].id + "," + total[i].name + "," + types + "," + lat + "," + lng);
+
+//                c.push[total[i].id]
+//                c.push[total[i].name]
+//                c.push[types]
+//                c.push[lat]
+//                c.push[lng]
+//
+//                content.push(c)
+            }
+
+
+//            console.log(content);
+//            for (var i = 0; i < content.length; i++) {
+//                var value = content[i];
+//
+//                for (var j = 0; j < value.length; j++) {
+//                    var innerValue = value[j];
+//                    var result = innerValue.replace(/"/g, '""');
+//                    if (result.search(/("|,|\n)/g) >= 0)
+//                        result = '"' + result + '"';
+//                    if (j > 0)
+//                        finalVal += ',';
+//                    finalVal += result;
+//                }
+//
+//                finalVal += '\n';
+//            }
+
+            console.log(finalVal);
+            var pom = document.createElement('a');
+            pom.setAttribute('href', 'data:text/csv;charset=utf-8,' + encodeURIComponent(finalVal));
+            pom.setAttribute('download', 'test.csv');
+            pom.click();
+        }
+    }
+
+</script>

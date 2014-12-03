@@ -2,29 +2,29 @@ from pgeo.gis import processing
 import glob
 
 objs = [
-    # {
-    #     "band": 2,
-    #     "process": [
-    #         {
-    #             "extract_bands": ""
-    #         }
-    #     ]
-    # },
-    # {
-    #     "band": 1,
-    #     "output_file_name": "merge",
-    #     "process": [
-    #         {
-    #             "gdal_merge": {
-    #                 "prefix": "gdal_merge_",
-    #                 "extension": "tif",
-    #                 "opt": {
-    #                     "-n": "0"
-    #                 },
-    #             }
-    #         }
-    #     ]
-    # },
+    {
+        "band": 2,
+        "process": [
+            {
+                "extract_bands": ""
+            }
+        ]
+    },
+    {
+        "band": 1,
+        "output_file_name": "merge",
+        "process": [
+            {
+                "gdal_merge": {
+                    "prefix": "gdal_merge_",
+                    "extension": "tif",
+                    "opt": {
+                        "-n": "0"
+                    },
+                }
+            }
+        ]
+    },
     # {
     #     "band": 1,
     #     "output_file_name": "final_4326",
@@ -101,38 +101,38 @@ objs = [
     #         }
     #     ]
     # },
-    {
-        "band": 1,
-        "output_file_name": "final_3857_deflate",
-        "process": [
-            {
-                "gdal_translate": {
-                    "opt": {
-                        "-of": "GTiff",
-                        "-co": "'TILED=YES'",
-                        "-co": "'COMPRESS=DEFLATE'"
-                    },
-                    "prefix": "gdalwarp_",
-                    "extension": "tif"
-                }
-
-
-            }
-        ]
-    },
-    {
-        "band": 1,
-        "process": [
-            {
-                "gdaladdo": {
-                    "parameters": {
-                        # "--config": "BIGTIFF_OVERVIEW IF_NEEDED"
-                    },
-                    "overviews_levels": "2 4 8 16"
-                }
-            }
-        ]
-    }
+    # {
+    #     "band": 1,
+    #     "output_file_name": "final_3857_deflate",
+    #     "process": [
+    #         {
+    #             "gdal_translate": {
+    #                 "opt": {
+    #                     "-of": "GTiff",
+    #                     "-co": "'TILED=YES'",
+    #                     "-co": "'COMPRESS=DEFLATE'"
+    #                 },
+    #                 "prefix": "gdalwarp_",
+    #                 "extension": "tif"
+    #             }
+    #
+    #
+    #         }
+    #     ]
+    # },
+    # {
+    #     "band": 1,
+    #     "process": [
+    #         {
+    #             "gdaladdo": {
+    #                 "parameters": {
+    #                     # "--config": "BIGTIFF_OVERVIEW IF_NEEDED"
+    #                 },
+    #                 "overviews_levels": "2 4 8 16"
+    #             }
+    #         }
+    #     ]
+    # }
 ]
 
 
@@ -149,10 +149,10 @@ def process_landcover():
     # input_dir = glob.glob(path)
     # for dir in input_dir:
         dir ="/home/vortex/Desktop/LAYERS/GHG_13_NOVEMEBRE/MCD12Q1/processed_2009/"
-        #source_path = [dir + "*.hdf"]
+        source_path = [dir + "*.hdf"]
         #source_path = [dir + "merge.hdf"]
-        source_path = [dir + "final_3857.tiff"]
-        output_path = dir
+        #source_path = [dir + "final_3857.tiff"]
+        output_path = dir + "test_processing/"
         for obj in objs:
             obj["source_path"] = source_path
             obj["output_path"] = output_path

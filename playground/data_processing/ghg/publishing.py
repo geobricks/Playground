@@ -97,7 +97,7 @@ def publish_data_GriddedLivestock(input_folder):
         date = info[2] + "01"
         metadata_def = create_metadata(title, product, sldname, date, None)
         print metadata_def
-        manager.publish_coverage(input_file, metadata_def, False, False)
+        #manager.publish_coverage(input_file, metadata_def, False, False)
 
 
 def publish_data_Climate_Zones_processed(input_folder):
@@ -113,7 +113,7 @@ def publish_data_Climate_Zones_processed(input_folder):
         date = None
         metadata_def = create_metadata(title, product, sldname, date, None)
         print metadata_def
-        manager.publish_coverage(input_file, metadata_def, False, False)
+        #manager.publish_coverage(input_file, metadata_def, False, False)
 
 
 def publish_data_modis_landcover(input_folder):
@@ -129,7 +129,7 @@ def publish_data_modis_landcover(input_folder):
         date = info[6] + info[7]
         metadata_def = create_metadata(title, product, sldname, date, None)
         print metadata_def
-        manager.publish_coverage(input_file, metadata_def, False, False)
+        #manager.publish_coverage(input_file, metadata_def, False, False)
 
 
 def publish_burnerdareas():
@@ -155,7 +155,7 @@ def publish_burnerdareas():
                     title = product + " " + info[3]
                     metadata_def = create_metadata(title, product, sldname, date, None, False, uid)
                     print metadata_def
-                    manager.publish_coverage(input_file, metadata_def, False, False)
+                    #manager.publish_coverage(input_file, metadata_def, False, False)
                 else:
                     info = str.split(get_filename(input_file), "_")
                     date = info[4] + '01'
@@ -165,7 +165,7 @@ def publish_burnerdareas():
                     title = product + " " + info[4]
                     metadata_def = create_metadata(title, product, sldname, date, None, False, uid)
                     print metadata_def
-                    manager.publish_coverage(input_file, metadata_def, False, False)
+                    #manager.publish_coverage(input_file, metadata_def, False, False)
             else: #4326
                 info = str.split(get_filename(input_file), "_")
                 if len(info) >= 5:
@@ -228,7 +228,7 @@ def publish_gez_vector():
     date = "201001"
     metadata_def = create_metadata(title, product, sldname, date, None, False, uid)
     print metadata_def
-    manager.publish_shapefile(None, metadata_def, False, False)
+    #manager.publish_shapefile(None, metadata_def, False, False)
 
 def publish_area_of_histosols(path):
     input_files = glob.glob(path + "*.tif")
@@ -241,7 +241,7 @@ def publish_area_of_histosols(path):
         date = '200801'
         metadata_def = create_metadata(title, product, sldname, date, None, False, uid)
         print metadata_def
-        manager.publish_coverage(input_file, metadata_def, False, False)
+        #manager.publish_coverage(input_file, metadata_def, False, False)
 
 
 def publish_gez(path):
@@ -255,7 +255,7 @@ def publish_gez(path):
         date = '201001'
         metadata_def = create_metadata(title, product, sldname, date, None, False)
         print metadata_def
-        manager.publish_coverage(input_file, metadata_def, False, False)
+        #manager.publish_coverage(input_file, metadata_def, False, False)
 
 
 def publish_ghg_glc2000_v1_1(path):
@@ -269,7 +269,7 @@ def publish_ghg_glc2000_v1_1(path):
         date = '200001'
         metadata_def = create_metadata(title, product, sldname, date, None, False)
         print metadata_def
-        manager.publish_coverage(input_file, metadata_def, False, True)
+        manager.publish_coverage(input_file, metadata_def, False, False)
 
 
 def publish_cultivation_organic_soils_croplands(path):
@@ -283,7 +283,7 @@ def publish_cultivation_organic_soils_croplands(path):
         date = '200001'
         metadata_def = create_metadata(title, product, sldname, date, None, False)
         print metadata_def
-        manager.publish_coverage(input_file, metadata_def, False, True)
+        #manager.publish_coverage(input_file, metadata_def, False, False)
 
 
 
@@ -294,10 +294,10 @@ def publish_cultivation_organic_soils_croplands(path):
 # publish_area_of_histosols("/home/vortex/Desktop/LAYERS/GHG_13_NOVEMEBRE/HWSD/3857/")
 # publish_gez("/home/vortex/Desktop/LAYERS/GHG_13_NOVEMEBRE/gez_raster/3857/")
 # publish_gez_vector()
-#publish_ghg_glc2000_v1_1("/home/vortex/Desktop/LAYERS/GHG_13_NOVEMEBRE/glc2000/3857/")
-#publish_cultivation_organic_soils_croplands("/home/vortex/Desktop/LAYERS/GHG_13_NOVEMEBRE/cultivation_organic_soils/3857/")
+# publish_ghg_glc2000_v1_1("/home/vortex/Desktop/LAYERS/GHG_13_NOVEMEBRE/glc2000/3857/")
+# publish_cultivation_organic_soils_croplands("/home/vortex/Desktop/LAYERS/GHG_13_NOVEMEBRE/cultivation_organic_soils/3857/")
 
 
 
 
-#db.layer.remove( {"_id": ObjectId("545baf855c19e12f73d17162")});
+#db.layer.remove( {"_id": ObjectId("545baf855c19e12f73d17162")});: c.que per info nel link ul: c.que per info nel link ul: c.que per info nel link ul: c.que per info nel link ultimo (168) quelle per i tot e a ag soils non funztimo (168) quelle per i tot e a ag soils non funztimo (168) quelle per i tot e a ag soils non funztimo (168) quelle per i tot e a ag soils non funz

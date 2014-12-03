@@ -18,12 +18,12 @@
     var total = []
 
     // old values
-    //var start = [39.49028, -0.40495]
-    //var end   = [39.42944, -0.33302]
+    var start = [39.49028, -0.40495]
+    var end   = [39.42944, -0.33302]
 
 
-    var start = [39.566112, -0.432538]
-    var end   = [ 39.279061, -0.273746]
+//    var start = [39.566112, -0.432538]
+//    var end   = [ 39.279061, -0.273746]
 
     var pyrmont = new google.maps.LatLng(start[0],start[1]);
 
@@ -32,31 +32,33 @@
             zoom: 15
         });
 
+    https://maps.googleapis.com/maps/api/js/QuotaService.RecordEvent?1shttp%3A%2F%2Flocalhost%3A63343%2FFENIX-P-GEO%2Fplayground%2Falex_google_places%2Falex.html&4e1&5e0&6u1&7shkqvz4&callback=_xdc_._f1ctjv&token=38672
+
    var types = [
-       'hair_care',
-       'restaurant',
-       'liquor_store',
-       'library',
-       'store',
-       'shoe_store',
-       'pharmacy',
-       'bank',
-       'food',
-       'health',
-       'jewelry_store' ,
-       'insurance_agency',
-       'pet_store',
-       'physiotherapist',
-       'laundry',
-       'lawyer',
-       'meal_delivery',
-       'veterinary_care',
-       'travel_agency',
-       'taxi_stand',
-       'home_goods_store',
-       'grocery_or_supermarket',
-       'bakery',
-       'cafe'
+       'hair_care'
+//       'restaurant',
+//       'liquor_store',
+//       'library',
+//       'store',
+//       'shoe_store',
+//       'pharmacy',
+//       'bank',
+//       'food',
+//       'health',
+//       'jewelry_store' ,
+//       'insurance_agency',
+//       'pet_store',
+//       'physiotherapist',
+//       'laundry',
+//       'lawyer',
+//       'meal_delivery',
+//       'veterinary_care',
+//       'travel_agency',
+//       'taxi_stand',
+//       'home_goods_store',
+//       'grocery_or_supermarket',
+//       'bakery',
+//       'cafe'
    ]
 
     var timeout = 2000;
@@ -167,38 +169,15 @@
                 finalVal += result;
 
                 finalVal += '\n';
-
-//                str += total[i].name + '"','"' + types + '"','"' + lat + '"','"' + lng + '"'
-//                str += '\n';
-//                console.log(total[i].id + "," + total[i].name + "," + types + "," + lat + "," + lng);
-
-//                c.push[total[i].id]
-//                c.push[total[i].name]
-//                c.push[types]
-//                c.push[lat]
-//                c.push[lng]
-//
-//                content.push(c)
             }
-
-
-//            console.log(content);
-//            for (var i = 0; i < content.length; i++) {
-//                var value = content[i];
-//
-//                for (var j = 0; j < value.length; j++) {
-//                    var innerValue = value[j];
-//                    var result = innerValue.replace(/"/g, '""');
-//                    if (result.search(/("|,|\n)/g) >= 0)
-//                        result = '"' + result + '"';
-//                    if (j > 0)
-//                        finalVal += ',';
-//                    finalVal += result;
-//                }
-//
-//                finalVal += '\n';
-//            }
-
+            console.log(finalVal);
+            var pom = document.createElement('a');
+            pom.setAttribute('href', 'data:text/csv;charset=utf-8,' + encodeURIComponent(finalVal));
+            pom.setAttribute('download', 'test.csv');
+            pom.click();
+        }
+        else {
+            console.log("here");
             console.log(finalVal);
             var pom = document.createElement('a');
             pom.setAttribute('href', 'data:text/csv;charset=utf-8,' + encodeURIComponent(finalVal));

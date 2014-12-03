@@ -73,9 +73,21 @@ def create_aggregation_json():
     obj.close
 
 
-create_aggregation_json()
+#create_aggregation_json()
 #create_json_file("country_view")
 #create_json_file("browse_by_domain_structure")
+create_json_file("GE-PROJ")
+create_json_file("GM-PROJ")
+create_json_file("G1-PROJ")
+create_json_file("GR-PROJ")
+create_json_file("GU-PROJ")
+create_json_file("GP-PROJ")
+create_json_file("GA-PROJ")
+create_json_file("GV-PROJ")
+create_json_file("GB-PROJ")
+create_json_file("GH-PROJ")
+
+
 #create_rankings()
 #create_json_groups()
 #create_json_domains()

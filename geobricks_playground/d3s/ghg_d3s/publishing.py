@@ -64,12 +64,12 @@ def publish_data_GriddedLivestock(input_folder):
     for input_file in input_files:
         info = str.split(get_filename(input_file), "_")
         title = info[0].capitalize() + " " + info[1] + " - " + info[2]
-        sldname = "ghg_" +get_filename(input_file).lower()
+        sldname = "ghg_" + get_filename(input_file).lower() + "_EN"
         date = info[2] + "01"
         metadata_def = create_metadata(title, product, date, sldname)
         print metadata_def
         try:
-            data_manager.publish_coveragestore(input_file, metadata_def, True, True, True)
+            data_manager.publish_coveragestore(input_file, metadata_def, False, True, True)
         except Exception, e:
             print e
         #manager.publish_coverage(input_file, metadata_def, False, False)

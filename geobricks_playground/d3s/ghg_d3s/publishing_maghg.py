@@ -118,7 +118,7 @@ def publish_maghg(input_folder):
 
                 # dele if import failed
                 #uid = metadata_def["dsd"]["workspace"] + ":" + metadata_def["dsd"]["layerName"]
-                #data_manager.delete_coveragestore(metadata_def["dsd"]["workspace"] + ":" + metadata_def["dsd"]["layerName"])
+                data_manager.delete_coveragestore(metadata_def["dsd"]["workspace"] + ":" + metadata_def["dsd"]["layerName"])
 
 
                 #  fix of some styles
@@ -127,7 +127,7 @@ def publish_maghg(input_folder):
                 #     data_manager.geoserver_manager.set_style(metadata_def["dsd"]["layerName"], sldname)
 
                 # upload
-                data_manager.publish_coveragestore(input_file, metadata_def, False, True, True)
+                #data_manager.publish_coveragestore(input_file, metadata_def, False, True, True)
             except Exception, e:
                 print e
 
@@ -148,6 +148,7 @@ def get_sldname(filename):
         sldname = sldname + "co2"
     elif "DM" in filename.upper():
         sldname = sldname + "dm"
+
     elif "N2O" in filename.upper():
         sldname = sldname + "n2o"
     return sldname + "_EN"

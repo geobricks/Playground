@@ -2,21 +2,23 @@
 import glob
 import calendar
 import datetime
+import json
 
 from pgeo.utils.filesystem import get_filename
-from geobricks_playground.d3s.config.config_d3s import settings
-from geobricks_playground.d3s.utils import get_range_dates_metadata_yearmonth
+from geobricks_playground.d3s.utils import get_range_dates_metadata_yearly
 from geobricks_data_manager.core.data_manager_core import DataManager
+
+# N.B. it's imported the GHG_DEMO CONFIG!
+from geobricks_playground.config.config_ghg_demo import settings
+
 
 
 # data manager
 data_manager = DataManager(settings)
 
 
-def create_metadata(title, product, date=None, default_style=None, workspace="ghg", uid_distribution=None, is_raster=True,  uid=None):
+def create_metadata(title, product, date=None, default_style=None, map_projection_code="EPSG:3857", workspace="ghg", uid_distribution=None, is_raster=True, uid=None):
 
-    # get date range
-    from_date, to_date = get_range_dates_metadata_yearmonth(date)
 
     metadata_def = {
         "title": {
@@ -29,26 +31,36 @@ def create_metadata(title, product, date=None, default_style=None, workspace="gh
             "resourceRepresentationType": "geographic",
             "seCoverage": {
                 "coverageSectors": {
-                    "idCodeList": "FENIX_GeographicalSectors",
+                    "idCodeList": "layer_products",
                     "version": "1.0",
-                    "codes": [{"code": product}]
-                },
-                "coverageTime": {
-                    "to": from_date,
-                    "from": to_date
+                    "codes": [{"code": sanitize_name(product)}]
                 }
             }
         },
         "meSpatialRepresentation": {
             "layerType": "raster" if is_raster else "vector"
         },
-        "dsd" : {
+        "meReferenceSystem": {
+            "seProjection": {
+                "projection": {
+                    "idCodeList": "mapProjections",
+                    "version": "1.0",
+                    "codes": [{"code": map_projection_code}]
+                }
+            }
+        },
+        "dsd": {
             "contextSystem": "FENIX",
             "workspace": data_manager.geoserver_manager.get_default_workspace_name() if workspace is None else workspace,
             # "layerName": "layername",
-            "layerName": title["EN"] if "EN" in title else title,
+            "layerName": sanitize_name(title["EN"] if "EN" in title else title),
         }
     }
+
+    # get date range
+    if date is not None:
+        from_date, to_date = get_range_dates_metadata_yearly(date)
+        metadata_def["meContent"]["seCoverage"]["coverageTime"] = {"from": from_date, "to": to_date }
 
     if default_style is not None:
         metadata_def["dsd"]["defaultStyle"] = default_style
@@ -65,11 +77,11 @@ def publish_data_GriddedLivestock(input_folder):
         info = str.split(get_filename(input_file), "_")
         title = info[0].capitalize() + " " + info[1] + " - " + info[2]
         sldname = "ghg_" + get_filename(input_file).lower() + "_EN"
-        date = info[2] + "01"
+        date = info[2]
         metadata_def = create_metadata(title, product, date, sldname)
-        print metadata_def
         try:
-            data_manager.publish_coveragestore(input_file, metadata_def, False, True, True)
+            print json.dumps(metadata_def)
+            data_manager.publish_coveragestore(input_file, metadata_def, False, False, True)
         except Exception, e:
             print e
         #manager.publish_coverage(input_file, metadata_def, False, False)
@@ -78,32 +90,44 @@ def publish_data_GriddedLivestock(input_folder):
 def publish_data_Climate_Zones_processed(input_folder):
     input_files = glob.glob(input_folder +"/*.tif")
     product = "JRC climate zone"
-    sldname = "ghg_jrc_climate_zone_0.25deg"
+    sldname = "ghg_jrc_climate_zone_0.25deg" + "_EN"
     for input_file in input_files:
         info = str.split(get_filename(input_file), "_")
         title = info[0] + " " + info[1].lower() + " - " + info[2].lower()
+        map_projection_code = "EPSG:3857"
         if "4326" in info[4]:
             title += " (4326)"
             product += " (4326)"
-        date = None
-        metadata_def = create_metadata(title, product, sldname, date, None)
-        print metadata_def
+            map_projection_code = "EPSG:4326"
+        date = "2010"
+        metadata_def = create_metadata(title, product, date, sldname, map_projection_code)
+        try:
+            print json.dumps(metadata_def)
+            data_manager.publish_coveragestore(input_file, metadata_def, False, False, True)
+        except Exception, e:
+            print e
         #manager.publish_coverage(input_file, metadata_def, False, False)
 
 
 def publish_data_modis_landcover(input_folder):
     input_files = glob.glob(input_folder +"/*.tif")
     product = "MODIS - Land Cover Type UMD"
-    sldname = "modis_land_cover"
+    sldname = "modis_land_cover" + "_EN"
     for input_file in input_files:
         info = str.split(get_filename(input_file), "_")
         title = info[0] + " " + info[1] + " " + info[2] + " " + info[3] + " " + info[4] + " " + info[5] + " - " + info[6]
+        map_projection_code = "EPSG:3857"
         if "4326" in info[4]:
             title += " (4326)"
             product += " (4326)"
-        date = info[6] + info[7]
-        metadata_def = create_metadata(title, product, sldname, date, None)
-        print metadata_def
+            map_projection_code = "EPSG:4326"
+        date = info[6]
+        metadata_def = create_metadata(title, product, date, sldname, map_projection_code)
+        try:
+            print json.dumps(metadata_def)
+            data_manager.publish_coveragestore(input_file, metadata_def, False, False, True)
+        except Exception, e:
+            print e
         #manager.publish_coverage(input_file, metadata_def, False, False)
 
 
@@ -114,7 +138,7 @@ def publish_burnerdareas():
         input_files = glob.glob(d + "/*.tiff")
 
         # sld and workspace
-        sldname = "ghg_burnedareas"
+        sldname = "ghg_burnedareas" + "_EN"
         workspace = "fenix:"
 
         for input_file in input_files:
@@ -123,35 +147,47 @@ def publish_burnerdareas():
                 if "humid" in input_file.lower() or "allforests" in input_file.lower():
                     print input_file
                     info = str.split(get_filename(input_file), "_")
-                    date = info[3] + '01'
+                    date = info[3]
                     filename = get_filename(input_file).rsplit('_', 1)[0]
                     uid = workspace + get_filename(filename).lower()
                     product = burned_areas_switch(filename)
                     title = product + " " + info[3]
-                    metadata_def = create_metadata(title, product, sldname, date, None, False, uid)
-                    print metadata_def
+                    metadata_def = create_metadata(title, product, date, sldname)
+                    try:
+                        print json.dumps(metadata_def)
+                        data_manager.publish_coveragestore(input_file, metadata_def, False, False, True)
+                    except Exception, e:
+                        print e
                     #manager.publish_coverage(input_file, metadata_def, False, False)
                 else:
                     info = str.split(get_filename(input_file), "_")
-                    date = info[4] + '01'
+                    date = info[4]
                     filename = get_filename(input_file).rsplit('_', 1)[0]
                     uid = workspace + get_filename(filename).lower()
                     product = burned_areas_switch(input_file)
                     title = product + " " + info[4]
-                    metadata_def = create_metadata(title, product, sldname, date, None, False, uid)
-                    print metadata_def
+                    metadata_def = create_metadata(title, product, date, sldname)
+                    try:
+                        print json.dumps(metadata_def)
+                        data_manager.publish_coveragestore(input_file, metadata_def, False, False, True)
+                    except Exception, e:
+                        print e
                     #manager.publish_coverage(input_file, metadata_def, False, False)
             else: #4326
                 info = str.split(get_filename(input_file), "_")
                 if len(info) >= 5:
                     title = info[0] + " " + info[1] + " " + info[2] + " " + info[3] + " " + info[4] + " - 4326"
-                    date = info[4] + '01'
+                    date = info[4]
                 else:
                     title = info[0] + " " + info[1] + " " + info[2] + " " + info[3]
-                    date = info[3] + '01'
+                    date = info[3]
                 product = get_filename(input_file).replace('_', ' ') + " (4326)"
-                metadata_def = create_metadata(title, product, sldname, date, None)
-                print metadata_def
+                metadata_def = create_metadata(title, product, date, sldname)
+                try:
+                    print json.dumps(metadata_def)
+                    data_manager.publish_coveragestore(input_file, metadata_def, False, False, True)
+                except Exception, e:
+                    print e
 
 
 def burned_areas_switch(filename):
@@ -199,52 +235,55 @@ def publish_gez_vector():
     uid = "fenix:gez_2010_3857"
     title = "Global Ecological Zones (GEZ) 2010  - Vector"
     product = "Global Ecological Zones (GEZ) 2010"
-    sldname = "ghg_gez_2010"
-    date = "201001"
-    metadata_def = create_metadata(title, product, sldname, date, None, False, uid)
+    sldname = "ghg_gez_2010" + "_EN"
+    date = "2010"
+    metadata_def = create_metadata(title, product, date, sldname)
     print metadata_def
     #manager.publish_shapefile(None, metadata_def, False, False)
 
 def publish_area_of_histosols(path):
     input_files = glob.glob(path + "*.tif")
     for input_file in input_files:
-        #info = "Organic soil surface area"
-        uid = "fenix:area_of_histosols_2008"
         title = "Organic soil surface area"
         product = "Harmonized World Soil Database - Organic soils"
-        sldname = "ghg_area_of_histosols"
-        date = '200801'
-        metadata_def = create_metadata(title, product, sldname, date, None, False, uid)
-        print metadata_def
-        #manager.publish_coverage(input_file, metadata_def, False, False)
+        sldname = "ghg_area_of_histosols" + "_EN"
+        date = '2008'
+        metadata_def = create_metadata(title, product, date, sldname)
+        try:
+            print json.dumps(metadata_def)
+            data_manager.publish_coveragestore(input_file, metadata_def, False, False, True)
+        except Exception, e:
+            print e
 
 
 def publish_gez(path):
     input_files = glob.glob(path + "*.tif")
     for input_file in input_files:
-        #info = "Organic soil surface area"
-        #uid = "fenix:gez_"
         title = "Global Ecological Zones (GEZ) 2010 - Raster"
         product = "Global Ecological Zones (GEZ) 2010"
-        sldname = "ghg_gez_2010_raster"
-        date = '201001'
-        metadata_def = create_metadata(title, product, sldname, date, None, False)
-        print metadata_def
-        #manager.publish_coverage(input_file, metadata_def, False, False)
+        sldname = "ghg_gez_2010_raster" + "_EN"
+        date = '2010'
+        metadata_def = create_metadata(title, product, date, sldname)
+        try:
+            print json.dumps(metadata_def)
+            data_manager.publish_coveragestore(input_file, metadata_def, False, False, True)
+        except Exception, e:
+            print e
 
 
 def publish_ghg_glc2000_v1_1(path):
     input_files = glob.glob(path + "*.tif")
     for input_file in input_files:
-        #info = "Organic soil surface area"
-        #uid = "fenix:gez_"
         title = "Global Land Cover 2000 (GLC2000)"
         product = "Global Land Cover 2000 (GLC2000)"
-        sldname = "ghg_glc2000_v1_1"
-        date = '200001'
-        metadata_def = create_metadata(title, product, sldname, date, None, False)
-        print metadata_def
-        #manager.publish_coverage(input_file, metadata_def, False, False)
+        sldname = "ghg_glc2000_v1_1" + "_EN"
+        date = '2000'
+        metadata_def = create_metadata(title, product, date, sldname)
+        try:
+            print json.dumps(metadata_def)
+            data_manager.publish_coveragestore(input_file, metadata_def, False, False, True)
+        except Exception, e:
+            print e
 
 
 def publish_cultivation_organic_soils_croplands(path):
@@ -254,15 +293,28 @@ def publish_cultivation_organic_soils_croplands(path):
         #uid = "fenix:gez_"
         title = "Cultivation Organic Soils - Croplands"
         product = "Cultivation Organic Soils"
-        sldname = "ghg_cultivation_organic_soils_cropland"
-        date = '200001'
-        metadata_def = create_metadata(title, product, sldname, date, None, False)
-        print metadata_def
-        #manager.publish_coverage(input_file, metadata_def, False, False)
+        sldname = "ghg_cultivation_organic_soils_cropland" + "_EN"
+        date = '2000'
+        metadata_def = create_metadata(title, product, date, sldname)
+        try:
+            print json.dumps(metadata_def)
+            data_manager.publish_coveragestore(input_file, metadata_def, False, False, True)
+        except Exception, e:
+            print e
 
 
+def sanitize_name(name):
+    """
+    This method clean the name of a layer, should be avoided to use dots as names
+    :param name: name of the layer
+    :return: sanitized layer name
+    """
+    name = name.replace(".", "")
+    name = name.replace(" ", "_")
+    name = name.lower()
+    return name
 
-publish_data_GriddedLivestock("/home/vortex/Desktop/LAYERS/GHG_13_NOVEMEBRE/GriddedLivestock/to_publish_3857/")
+# publish_data_GriddedLivestock("/home/vortex/Desktop/LAYERS/GHG_13_NOVEMEBRE/GriddedLivestock/to_publish_3857/")
 # publish_data_Climate_Zones_processed("/home/vortex/Desktop/LAYERS/GHG_13_NOVEMEBRE/Climate_Zones_processed/to_publish/")
 # publish_data_modis_landcover("/home/vortex/Desktop/LAYERS/GHG_13_NOVEMEBRE/MCD12Q1/processed_2009/3857/")
 # publish_burnerdareas()
@@ -272,7 +324,3 @@ publish_data_GriddedLivestock("/home/vortex/Desktop/LAYERS/GHG_13_NOVEMEBRE/Grid
 # publish_ghg_glc2000_v1_1("/home/vortex/Desktop/LAYERS/GHG_13_NOVEMEBRE/glc2000/3857/")
 # publish_cultivation_organic_soils_croplands("/home/vortex/Desktop/LAYERS/GHG_13_NOVEMEBRE/cultivation_organic_soils/3857/")
 
-
-
-
-#db.layer.remove( {"_id": ObjectId("545baf855c19e12f73d17162")});: c.que per info nel link ul: c.que per info nel link ul: c.que per info nel link ul: c.que per info nel link ultimo (168) quelle per i tot e a ag soils non funztimo (168) quelle per i tot e a ag soils non funztimo (168) quelle per i tot e a ag soils non funztimo (168) quelle per i tot e a ag soils non funz

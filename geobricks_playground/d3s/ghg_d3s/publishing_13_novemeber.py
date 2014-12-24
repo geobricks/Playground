@@ -316,7 +316,7 @@ def sanitize_name(name):
 
 # publish_data_GriddedLivestock("/home/vortex/Desktop/LAYERS/GHG_13_NOVEMEBRE/GriddedLivestock/to_publish_3857/")
 # publish_data_Climate_Zones_processed("/home/vortex/Desktop/LAYERS/GHG_13_NOVEMEBRE/Climate_Zones_processed/to_publish/")
-# publish_data_modis_landcover("/home/vortex/Desktop/LAYERS/GHG_13_NOVEMEBRE/MCD12Q1/processed_2009/3857/")
+publish_data_modis_landcover("/home/vortex/Desktop/LAYERS/GHG_13_NOVEMEBRE/MCD12Q1/processed_2009/3857/")
 # publish_burnerdareas()
 # publish_area_of_histosols("/home/vortex/Desktop/LAYERS/GHG_13_NOVEMEBRE/HWSD/3857/")
 # publish_gez("/home/vortex/Desktop/LAYERS/GHG_13_NOVEMEBRE/gez_raster/3857/")

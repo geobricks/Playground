@@ -114,11 +114,11 @@ def publish_maghg(input_folder):
             sldname = get_sldname(filename)
             metadata_def = create_metadata(title, product, date, sldname, projection_name)
             try:
-                #print product, json.dumps(metadata_def["dsd"]["layerName"])
+                # print product, json.dumps(metadata_def["dsd"]["layerName"])
 
-                # dele if import failed
+                # delete if import failed
                 #uid = metadata_def["dsd"]["workspace"] + ":" + metadata_def["dsd"]["layerName"]
-                data_manager.delete_coveragestore(metadata_def["dsd"]["workspace"] + ":" + metadata_def["dsd"]["layerName"])
+                #data_manager.delete_coveragestore(metadata_def["dsd"]["workspace"] + ":" + metadata_def["dsd"]["layerName"])
 
 
                 #  fix of some styles
@@ -127,7 +127,7 @@ def publish_maghg(input_folder):
                 #     data_manager.geoserver_manager.set_style(metadata_def["dsd"]["layerName"], sldname)
 
                 # upload
-                #data_manager.publish_coveragestore(input_file, metadata_def, False, True, True)
+                data_manager.publish_coveragestore(input_file, metadata_def, False, True, True)
             except Exception, e:
                 print e
 

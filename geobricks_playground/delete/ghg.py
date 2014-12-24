@@ -6,6 +6,9 @@ import csv
 
 data_manager = get_data_manager()
 
+
+data_manager.delete_coveragestore("ghg:organic_soil_surface_area")
+
 # def delete_uid(uid):
 #     try:
 #         data_manager.delete_coveragestore(uid, True, True)
@@ -30,10 +33,10 @@ data_manager = get_data_manager()
 
 
 # delete maghg
-with open('../coding_systems/csv/cs_maghg.csv', 'rb') as csvfile:
-    rows = csv.reader(csvfile)
-    for row in rows:
-        print row
+# with open('../coding_systems/csv/cs_maghg.csv', 'rb') as csvfile:
+#     rows = csv.reader(csvfile)
+#     for row in rows:
+#         print row
         #data_manager.delete_coveragestore("ghg:"+row[0])
         # print data_manager.metadata_manager.get_by_uid("ghg:"+row[0])
 

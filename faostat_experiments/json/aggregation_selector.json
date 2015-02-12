@@ -1,1 +1,0 @@
-[{ "_id" : { "$oid" : "51f22fc9a17693f187d85505"} , "code" : "SUM" , "E_label" : "Sum" , "F_label" : "Somme" , "S_label" : "Suma"},{ "_id" : { "$oid" : "51f22fd9a17693f187d85506"} , "code" : "AVG" , "E_label" : "Average" , "F_label" : "Moyenne" , "S_label" : "Promedio"}]
